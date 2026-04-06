@@ -1,0 +1,53 @@
+Context file
+Objective: Give the IA the context that he needs to create or adapt the created service
+
+Llenar formularios para aplicaciones de curriculos es complicado y lleno de pasos repetitivos, donde tienes que copiar y pegar la información de tu curriculum y tienes que adaptarlo a la vaga que estas aplicando, como por ejemplo están buscando alguien especialista en discovery de clientes, entonces tienes que resaltar eso. Por ejemplo si estás aplicando a un puesto por medio de Remotly o Gupy o RemoteWorks o cualquier plataforma de reclutamiento tienes que llenar siempre los mismos campos como ser:
+Titulo de tu ocupación
+  Product Manager | Product Owner | Brand Manager
+Descripción breve de lo que haces
+  Ex.
+    I hold an MBA in Digital Business (USP-ESALQ) and a degree in Commercial Engineering. With over 7 years of international experience, I combine the art of Brand Management (beverage/food industry) with techniques of Product Management (e-commerce/ Saas).
+    My superpower is transforming bleeding points (highest impact pain) into clear value. I leverage active listening (Discovery tools) and negotiation to solve the main business problems. My focus is on achieving measurable Outcomes, not just building Outputs.
+    Languages: Spanish, English, and Portuguese.
+
+Nombre de la empresa
+  Product Owner / Business Analyst - Viva
+Tiempo que trabajaste
+  Desde
+    Mes: April 
+    Anho: 2019
+  Hasta
+    Mes:October
+    Anho: 2021
+Pais
+  Bolivia
+Tipo de contrato - remoto, presencial , híbrido
+  Hybrid
+Sobre la empresa
+  A telecommunications and technology company, the third-largest telecom company in Bolivia, with more than 24% market share with over 2 million users.
+Lo que hacias , además siempre tiene que estar alineado con el puesto y el puesto puede cambiar
+  As a Product Owner, I oversaw over $5M USD/month in revenue. I was responsible for the monetary impact of each product and coordinated with all areas of the company.
+Lo que lograste 
+  Goals achieved:
+    Led the creation of 6 new products that increased sales by more than $20k USD/month.
+    Created a new B2B offer, that helped retain 48k users with churn rate of  < 2%
+    During the COVID pandemic, created incentives that increased digital payments by 30%.
+Y las herramientas que usaste, que muchas veces tienes que resaltar más unas que otras , ya que el reclutador quiere ver las que el tiene en la oportunidad laboral.
+  Key Tools Used:
+    Customer calls for pricing and use simulations (to gather customer input on price and use for new offers).
+    Small group profitability tests (sales simulations with small groups to validate product profitability before mass launch).
+Technical skills and frameworks, llenar esto tambien siempre es un problema, porque te piden llenar así:
+  Nombre del certificado
+    SQL bootcamp
+  Fecha de inicio
+    anho: 2022
+    Mes: Octubre
+  Fecha de conclusion
+    anho: 2024
+    Mes: Septiembre
+  Certificado
+    URL: 
+
+
+Entonces siempre es complicado llenar estos formularios ya que tienen mucha información que cada canal de reclutamiento pide porque lo necesitan saber, pero para el usuario es muy molesto llenarlo uno a uno
+  
