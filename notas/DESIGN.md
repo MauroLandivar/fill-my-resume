@@ -80,6 +80,9 @@ Nomenclatura consistente en código y UI:
 ```
 
 ---
+Imagen Dribble
+
+<img width="2048" height="1536" alt="image" src="https://github.com/user-attachments/assets/0409727b-8b45-4d63-991d-d6f8a23786b4" />
 
 ## Pendientes de diseño
 
