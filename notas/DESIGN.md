@@ -171,6 +171,6 @@ Todos definidos arriba. Se implementarán como variables CSS (`--token-name`) en
 - [x] Extraer paleta de colores y tokens
 - [x] Definir tipografía, espaciado, border-radius
 - [x] Mapear componentes según Design Systems (Kholmatova)
-- [ ] Elegir entre Lucide Icons o Hugeicons (confirmar con usuario)
+- [x] Íconos: **Lucide Icons** (más simple, más conocido, open source)
 - [ ] Crear archivo `tokens.css` base al iniciar el código
-- [ ] Decidir si el panel tiene modo compacto (solo íconos) o siempre expandido
+- [x] Layout: **panel acordeón** — secciones colapsables/expandibles, sin modo compacto
