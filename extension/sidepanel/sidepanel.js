@@ -1,6 +1,11 @@
-const STORAGE_KEY  = 'fillmyresume_v1';
-const PHOTO_KEY    = 'fillmyresume_photo';
+const STORAGE_KEY   = 'fillmyresume_v1';
+const PHOTO_KEY     = 'fillmyresume_photo';
 const API_KEY_STORE = 'fillmyresume_apikey';
+const EXTRAS_KEY    = 'fillmyresume_extras';
+const TAGS_KEY      = 'fillmyresume_tags';
+const BUILT_IN_WE   = 2;
+const BUILT_IN_EDU  = 2;
+const BUILT_IN_CERT = 2;
 
 const SYSTEM_PROMPT = `You are an expert career coach helping a job seeker craft compelling,
 personalized answers to interview questions and job application forms.
@@ -151,8 +156,20 @@ function setupDateCells() {
 // ── Tags ──────────────────────────────────────────────
 function setupTags() {
   document.querySelectorAll('.tag').forEach(tag => {
-    tag.addEventListener('click', () => {
-      const val = tag.textContent.replace(/\s+/g, ' ').trim();
+    if (tag.dataset.setup) return;
+    tag.dataset.setup = 'true';
+    if (!tag.querySelector('.tag-del')) {
+      const del = document.createElement('button');
+      del.className = 'tag-del';
+      del.textContent = '×';
+      del.title = 'Remove';
+      del.addEventListener('click', (e) => { e.stopPropagation(); tag.remove(); });
+      tag.appendChild(del);
+    }
+    tag.addEventListener('click', (e) => {
+      if (e.target.closest('.tag-del')) return;
+      const val = tag.dataset[currentLang]
+        || [...tag.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('').trim();
       copyText(val);
       tag.classList.add('copied');
       setTimeout(() => tag.classList.remove('copied'), 1500);
@@ -373,12 +390,45 @@ const EDITABLE_SEL = '.field-value, .entry-field-value, .date-cell-value, .entry
 async function saveToStorage() {
   const data = {};
   document.querySelectorAll(EDITABLE_SEL).forEach((el, i) => { data[i] = el.textContent.trim(); });
-  await storageSet({ [STORAGE_KEY]: data });
+
+  const extras = {
+    we:   Math.max(0, document.querySelectorAll('#work-list .entry-card').length  - BUILT_IN_WE),
+    edu:  Math.max(0, document.querySelectorAll('#edu-list .entry-card').length   - BUILT_IN_EDU),
+    cert: Math.max(0, document.querySelectorAll('#cert-list .entry-card').length  - BUILT_IN_CERT),
+  };
+
+  const getTagTexts = id => [...document.querySelectorAll(`#${id} .tag`)].map(t => {
+    const c = t.cloneNode(true); c.querySelector('.tag-del')?.remove(); return c.textContent.trim();
+  }).filter(Boolean);
+
+  const tags = { skills: getTagTexts('skills-wrap'), langs: getTagTexts('langs-wrap') };
+
+  await storageSet({ [STORAGE_KEY]: data, [EXTRAS_KEY]: extras, [TAGS_KEY]: tags });
 }
 
 async function loadFromStorage() {
-  const result = await storageGet([STORAGE_KEY, PHOTO_KEY]);
+  const result = await storageGet([STORAGE_KEY, PHOTO_KEY, EXTRAS_KEY, TAGS_KEY]);
 
+  // 1. Recreate extra entry shells BEFORE index-based load so indices match
+  const extras = result[EXTRAS_KEY] || { we: 0, edu: 0, cert: 0 };
+  for (let i = 0; i < (extras.we   || 0); i++) insertNewEntry('work-list',  makeWorkEntry(),  false);
+  for (let i = 0; i < (extras.edu  || 0); i++) insertNewEntry('edu-list',   makeEduEntry(),   false);
+  for (let i = 0; i < (extras.cert || 0); i++) insertNewEntry('cert-list',  makeCertEntry(),  false);
+
+  // 2. Rebuild tag lists if stored
+  const stored = result[TAGS_KEY];
+  if (stored?.skills?.length) {
+    const w = document.getElementById('skills-wrap');
+    w.innerHTML = '';
+    stored.skills.forEach(t => w.appendChild(makeTag(t)));
+  }
+  if (stored?.langs?.length) {
+    const w = document.getElementById('langs-wrap');
+    w.innerHTML = '';
+    stored.langs.forEach(t => w.appendChild(makeTag(t)));
+  }
+
+  // 3. Apply field values by DOM index
   const data = result[STORAGE_KEY];
   if (data) {
     document.querySelectorAll(EDITABLE_SEL).forEach((el, i) => {
@@ -425,6 +475,212 @@ editProfileBtn?.addEventListener('click', () => {
     showToast('Saved!');
   }
 });
+
+
+// ── Entry templates ───────────────────────────────────
+function makeWorkEntry() {
+  const div = document.createElement('div');
+  div.className = 'entry-card open';
+  div.innerHTML = `
+    <button class="entry-trigger">
+      <span class="entry-trigger-left">
+        <i data-lucide="building" width="14" height="14" class="entry-icon"></i>
+        <span>
+          <div class="entry-title">New Company — Role</div>
+          <div class="entry-subtitle">Start – End · Country · Type</div>
+        </span>
+      </span>
+      <i data-lucide="chevron-down" width="14" height="14" class="entry-chevron"></i>
+    </button>
+    <div class="entry-body">
+      <div class="field-card" data-copy="">
+        <span class="field-label" data-en="Company" data-es="Empresa" data-pt="Empresa">Company</span>
+        <span class="field-value"></span>
+      </div>
+      <div class="field-card" data-copy="">
+        <span class="field-label" data-en="Role" data-es="Cargo" data-pt="Cargo">Role</span>
+        <span class="field-value"></span>
+      </div>
+      <div class="entry-field">
+        <span class="entry-field-label">About the company</span>
+        <div class="entry-field-row"><span class="entry-field-value"></span>
+          <button class="copy-btn" data-value="" title="Copy"><i data-lucide="copy" width="13" height="13"></i></button></div>
+      </div>
+      <div class="entry-field">
+        <span class="entry-field-label">Responsibilities</span>
+        <div class="entry-field-row"><span class="entry-field-value"></span>
+          <button class="copy-btn" data-value="" title="Copy"><i data-lucide="copy" width="13" height="13"></i></button></div>
+      </div>
+      <div class="entry-field">
+        <span class="entry-field-label">Achievements</span>
+        <div class="entry-field-row"><span class="entry-field-value"></span>
+          <button class="copy-btn" data-value="" title="Copy"><i data-lucide="copy" width="13" height="13"></i></button></div>
+      </div>
+    </div>`;
+  return div;
+}
+
+function makeEduEntry() {
+  const div = document.createElement('div');
+  div.className = 'entry-card open';
+  div.innerHTML = `
+    <button class="entry-trigger">
+      <span class="entry-trigger-left">
+        <i data-lucide="book-open" width="14" height="14" class="entry-icon"></i>
+        <span>
+          <div class="entry-title">Degree</div>
+          <div class="entry-subtitle">Institution · Year – Year</div>
+        </span>
+      </span>
+      <i data-lucide="chevron-down" width="14" height="14" class="entry-chevron"></i>
+    </button>
+    <div class="entry-body">
+      <div class="entry-field">
+        <span class="entry-field-label">Institution</span>
+        <div class="entry-field-row"><span class="entry-field-value"></span>
+          <button class="copy-btn" data-value="" title="Copy"><i data-lucide="copy" width="13" height="13"></i></button></div>
+      </div>
+      <div class="entry-field">
+        <span class="entry-field-label">Degree</span>
+        <div class="entry-field-row"><span class="entry-field-value"></span>
+          <button class="copy-btn" data-value="" title="Copy"><i data-lucide="copy" width="13" height="13"></i></button></div>
+      </div>
+    </div>`;
+  return div;
+}
+
+function makeCertEntry() {
+  const div = document.createElement('div');
+  div.className = 'entry-card open';
+  div.innerHTML = `
+    <button class="entry-trigger">
+      <span class="entry-trigger-left">
+        <i data-lucide="file-badge" width="14" height="14" class="entry-icon"></i>
+        <span>
+          <div class="entry-title">Certificate Name</div>
+          <div class="entry-subtitle">Institution · Year</div>
+        </span>
+      </span>
+      <i data-lucide="chevron-down" width="14" height="14" class="entry-chevron"></i>
+    </button>
+    <div class="entry-body">
+      <div class="entry-field">
+        <span class="entry-field-label">Certificate Name</span>
+        <div class="entry-field-row"><span class="entry-field-value"></span>
+          <button class="copy-btn" data-value="" title="Copy"><i data-lucide="copy" width="13" height="13"></i></button></div>
+      </div>
+      <div class="entry-field">
+        <span class="entry-field-label">Institution</span>
+        <div class="entry-field-row"><span class="entry-field-value"></span>
+          <button class="copy-btn" data-value="" title="Copy"><i data-lucide="copy" width="13" height="13"></i></button></div>
+      </div>
+      <div class="entry-field">
+        <span class="entry-field-label">Certificate URL</span>
+        <div class="entry-field-row"><span class="entry-field-value"></span>
+          <button class="copy-btn" data-value="" title="Copy"><i data-lucide="copy" width="13" height="13"></i></button></div>
+      </div>
+    </div>`;
+  return div;
+}
+
+// Insert a new entry before the "+ Add" button, wire up handlers
+function insertNewEntry(listId, entry, autoEdit = true) {
+  const list   = document.getElementById(listId);
+  const addBtn = list.querySelector('.add-section-btn');
+  list.insertBefore(entry, addBtn);
+  entry.querySelector('.entry-trigger').addEventListener('click', () => entry.classList.toggle('open'));
+  addEntryDeleteBtn(entry);
+  setupFieldCards();
+  setupEntryFields();
+  lucide.createIcons({ nodes: [entry] });
+  updateSectionCount(listId);
+  if (autoEdit) {
+    if (!isEditMode) editProfileBtn?.click();
+    else entry.querySelectorAll(EDITABLE_SEL).forEach(el => { el.contentEditable = 'true'; el.spellcheck = false; });
+    entry.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+// Add a delete button to an entry card (CSS controls visibility via .edit-mode)
+function addEntryDeleteBtn(entry) {
+  if (entry.querySelector('.entry-delete-btn')) return;
+  const btn = document.createElement('button');
+  btn.className = 'entry-delete-btn';
+  btn.title = 'Delete entry';
+  btn.innerHTML = '<i data-lucide="x" width="11" height="11"></i>';
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!confirm('Delete this entry?')) return;
+    const listId = entry.closest('[id$="-list"]')?.id;
+    entry.remove();
+    if (listId) updateSectionCount(listId);
+  });
+  entry.insertBefore(btn, entry.firstChild);
+  lucide.createIcons({ nodes: [btn] });
+}
+
+function setupEntryDeleteButtons() {
+  ['work-list', 'edu-list', 'cert-list'].forEach(listId => {
+    document.querySelectorAll(`#${listId} .entry-card`).forEach(addEntryDeleteBtn);
+  });
+}
+
+function updateSectionCount(listId) {
+  const map = { 'work-list': 'work-count', 'edu-list': 'edu-count', 'cert-list': 'cert-count' };
+  const el  = document.getElementById(map[listId]);
+  if (el) el.textContent = document.querySelectorAll(`#${listId} .entry-card`).length;
+}
+
+// ── Tag factory (used for new tags and restored tags) ─
+function makeTag(text) {
+  const tag = document.createElement('span');
+  tag.className  = 'tag';
+  tag.dataset.setup = 'true';
+  tag.appendChild(document.createTextNode(text));
+  const del = document.createElement('button');
+  del.className = 'tag-del';
+  del.textContent = '×';
+  del.title = 'Remove';
+  del.addEventListener('click', (e) => { e.stopPropagation(); tag.remove(); });
+  tag.appendChild(del);
+  tag.addEventListener('click', (e) => {
+    if (e.target.closest('.tag-del')) return;
+    const val = [...tag.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('').trim();
+    copyText(val);
+    tag.classList.add('copied');
+    setTimeout(() => tag.classList.remove('copied'), 1500);
+  });
+  return tag;
+}
+
+// ── Inline tag add (skills / languages) ──────────────
+function setupTagAdd(btnId, inputWrapId, inputId, confirmId, wrapId) {
+  const btn     = document.getElementById(btnId);
+  const wrap    = document.getElementById(inputWrapId);
+  const input   = document.getElementById(inputId);
+  const confirm = document.getElementById(confirmId);
+  if (!btn || !wrap || !input || !confirm) return;
+
+  const open  = () => { btn.style.display = 'none'; wrap.classList.add('active'); input.focus(); };
+  const close = () => { input.value = ''; wrap.classList.remove('active'); btn.style.display = ''; };
+  const add   = () => {
+    const val = input.value.trim();
+    if (val) document.getElementById(wrapId).appendChild(makeTag(val));
+    close();
+  };
+
+  btn.addEventListener('click', open);
+  confirm.addEventListener('click', add);
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter')  { e.preventDefault(); add(); }
+    if (e.key === 'Escape') close();
+  });
+}
+
+// ── Wire up "+ Add entry" buttons ─────────────────────
+document.getElementById('add-work-btn')?.addEventListener('click', () => insertNewEntry('work-list',  makeWorkEntry()));
+document.getElementById('add-edu-btn')?.addEventListener('click',  () => insertNewEntry('edu-list',   makeEduEntry()));
+document.getElementById('add-cert-btn')?.addEventListener('click', () => insertNewEntry('cert-list',  makeCertEntry()));
 
 // ── Build CV summary for AI ───────────────────────────
 function buildCvSummary() {
@@ -1000,4 +1256,8 @@ loadFromStorage().then(() => {
   setupCompanyDelete();
   setupStarRating();
   setupStatusPills();
+  setupEntryDeleteButtons();
+  setupTagAdd('add-skill-btn', 'skill-input-wrap', 'skill-input', 'skill-confirm', 'skills-wrap');
+  setupTagAdd('add-lang-btn',  'lang-input-wrap',  'lang-input',  'lang-confirm',  'langs-wrap');
+  lucide.createIcons(); // re-run for any dynamically added icons
 });

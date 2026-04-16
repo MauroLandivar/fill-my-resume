@@ -1322,3 +1322,134 @@ body {
   color: white !important;
   font-size: 10px !important;
 }
+
+/* ── Add entry / section buttons ─────────────────────── */
+.add-section-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px 12px;
+  border: 1.5px dashed var(--color-divider);
+  border-radius: 10px;
+  background: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-family: var(--font-family);
+  transition: all 0.15s ease;
+  margin-top: 4px;
+}
+.add-section-btn:hover {
+  border-color: var(--color-text-primary);
+  color: var(--color-text-primary);
+  background: rgba(0,0,0,0.02);
+}
+
+/* ── Entry delete button (edit mode only) ────────────── */
+.entry-card { position: relative; }
+.entry-delete-btn {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 36px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: #fee2e2;
+  color: #ef4444;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  padding: 0;
+  transition: background 0.15s ease;
+}
+.entry-delete-btn:hover { background: #fca5a5; }
+.edit-mode .entry-delete-btn { display: flex; }
+
+/* ── Add tag row (skills / languages) ───────────────── */
+.add-tag-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.add-tag-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border: 1.5px dashed var(--color-divider);
+  border-radius: 999px;
+  background: none;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-family: var(--font-family);
+  transition: all 0.15s ease;
+}
+.add-tag-btn:hover {
+  border-color: var(--color-text-primary);
+  color: var(--color-text-primary);
+}
+.tag-input-wrap {
+  display: none;
+  align-items: center;
+  gap: 4px;
+}
+.tag-input-wrap.active { display: flex; }
+.tag-input {
+  border: 1.5px solid var(--color-active);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: var(--font-family);
+  outline: none;
+  width: 130px;
+  color: var(--color-text-primary);
+}
+.tag-input-confirm {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-active);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+/* ── Tag delete (edit mode) ──────────────────────────── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.tag-del {
+  display: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.18);
+  border: none;
+  font-size: 9px;
+  color: #fff;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  font-family: var(--font-family);
+  flex-shrink: 0;
+}
+.edit-mode .tag-del { display: flex; }

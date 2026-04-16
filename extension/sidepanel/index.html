@@ -199,11 +199,11 @@
         <span class="accordion-trigger-left">
           <i data-lucide="building-2" width="16" height="16"></i>
           <span class="section-label">Work Experience</span>
-          <span class="section-count">2</span>
+          <span class="section-count" id="work-count">2</span>
         </span>
         <i data-lucide="chevron-down" width="16" height="16" class="chevron"></i>
       </button>
-      <div class="accordion-content">
+      <div class="accordion-content" id="work-list">
 
         <!-- Entry 1 -->
         <div class="entry-card open">
@@ -439,6 +439,11 @@
           </div>
         </div>
 
+        <button class="add-section-btn" id="add-work-btn">
+          <i data-lucide="plus" width="13" height="13"></i>
+          <span data-en="Add experience" data-es="Agregar experiencia" data-pt="Adicionar experiência">Add experience</span>
+        </button>
+
       </div>
     </div>
 
@@ -448,11 +453,11 @@
         <span class="accordion-trigger-left">
           <i data-lucide="graduation-cap" width="16" height="16"></i>
           <span class="section-label">Education</span>
-          <span class="section-count">2</span>
+          <span class="section-count" id="edu-count">2</span>
         </span>
         <i data-lucide="chevron-down" width="16" height="16" class="chevron"></i>
       </button>
-      <div class="accordion-content">
+      <div class="accordion-content" id="edu-list">
 
         <div class="entry-card">
           <button class="entry-trigger">
@@ -546,6 +551,11 @@
           </div>
         </div>
 
+        <button class="add-section-btn" id="add-edu-btn">
+          <i data-lucide="plus" width="13" height="13"></i>
+          <span data-en="Add education" data-es="Agregar educación" data-pt="Adicionar educação">Add education</span>
+        </button>
+
       </div>
     </div>
 
@@ -555,11 +565,11 @@
         <span class="accordion-trigger-left">
           <i data-lucide="award" width="16" height="16"></i>
           <span class="section-label">Certifications</span>
-          <span class="section-count">2</span>
+          <span class="section-count" id="cert-count">2</span>
         </span>
         <i data-lucide="chevron-down" width="16" height="16" class="chevron"></i>
       </button>
-      <div class="accordion-content">
+      <div class="accordion-content" id="cert-list">
 
         <div class="entry-card">
           <button class="entry-trigger">
@@ -745,6 +755,11 @@
           </div>
         </div>
 
+        <button class="add-section-btn" id="add-cert-btn">
+          <i data-lucide="plus" width="13" height="13"></i>
+          <span data-en="Add certification" data-es="Agregar certificación" data-pt="Adicionar certificação">Add certification</span>
+        </button>
+
       </div>
     </div>
 
@@ -759,7 +774,7 @@
       </button>
       <div class="accordion-content">
         <p class="section-hint" data-en="Click any skill to copy it" data-es="Haz clic en una habilidad para copiarla" data-pt="Clique em uma habilidade para copiá-la">Click any skill to copy it</p>
-        <div class="tags-wrap">
+        <div class="tags-wrap" id="skills-wrap">
           <span class="tag">Product Management</span>
           <span class="tag">Product Discovery</span>
           <span class="tag">OKRs</span>
@@ -772,6 +787,18 @@
           <span class="tag">Agile / Scrum</span>
           <span class="tag">Data Analysis</span>
           <span class="tag">Stakeholder Management</span>
+        </div>
+        <div class="add-tag-row" id="add-skill-row">
+          <button class="add-tag-btn" id="add-skill-btn">
+            <i data-lucide="plus" width="11" height="11"></i>
+            <span data-en="Add skill" data-es="Agregar habilidad" data-pt="Adicionar habilidade">Add skill</span>
+          </button>
+          <div class="tag-input-wrap" id="skill-input-wrap">
+            <input class="tag-input" id="skill-input" type="text" placeholder="e.g. Notion" maxlength="40" />
+            <button class="tag-input-confirm" id="skill-confirm">
+              <i data-lucide="check" width="12" height="12"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -787,7 +814,7 @@
       </button>
       <div class="accordion-content">
         <p class="section-hint" data-en="Click any language to copy it" data-es="Haz clic en un idioma para copiarlo" data-pt="Clique em um idioma para copiá-lo">Click any language to copy it</p>
-        <div class="tags-wrap">
+        <div class="tags-wrap" id="langs-wrap">
           <span class="tag"
             data-en="Spanish — Native"
             data-es="Español — Nativo"
@@ -800,6 +827,18 @@
             data-en="Portuguese — Fluent"
             data-es="Portugués — Fluido"
             data-pt="Português — Fluente">Portuguese — Fluent</span>
+        </div>
+        <div class="add-tag-row" id="add-lang-row">
+          <button class="add-tag-btn" id="add-lang-btn">
+            <i data-lucide="plus" width="11" height="11"></i>
+            <span data-en="Add language" data-es="Agregar idioma" data-pt="Adicionar idioma">Add language</span>
+          </button>
+          <div class="tag-input-wrap" id="lang-input-wrap">
+            <input class="tag-input" id="lang-input" type="text" placeholder="e.g. French — B2" maxlength="40" />
+            <button class="tag-input-confirm" id="lang-confirm">
+              <i data-lucide="check" width="12" height="12"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
