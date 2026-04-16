@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fill My Resume — Your CV, one click away</title>
+  <meta name="description" content="Fill job applications in seconds. Your complete CV in a Chrome side panel — click any field to copy, generate AI answers, and track every job." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <link rel="stylesheet" href="styles/landing.css" />
+</head>
+<body>
+
+<!-- ── Nav ─────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+      Fill My Resume
+    </a>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-opt active" data-lang="en">EN</button>
+        <button class="lang-opt" data-lang="es">ES</button>
+      </div>
+      <a href="#demo" class="btn btn-ghost" data-en="Try it" data-es="Probarlo">Try it</a>
+      <a href="https://github.com/MauroLandivar/fill-my-resume" target="_blank" class="btn btn-primary" data-en="Download" data-es="Descargar">Download</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="badge" data-en="Chrome Extension · Free" data-es="Extensión de Chrome · Gratis">Chrome Extension · Free</span>
+      <h1>
+        <span data-en="Your CV," data-es="Tu CV,">Your CV,</span><br/>
+        <span data-en="one click away." data-es="a un clic.">one click away.</span>
+      </h1>
+      <p class="hero-sub" data-en="Stop re-typing the same information on every job application. Fill My Resume keeps your complete profile in a Chrome side panel — click any field to copy it instantly." data-es="Deja de escribir los mismos datos en cada aplicación. Fill My Resume mantiene tu perfil completo en el panel lateral de Chrome — haz clic en cualquier campo para copiarlo al instante.">
+        Stop re-typing the same information on every job application. Fill My Resume keeps your complete profile in a Chrome side panel — click any field to copy it instantly.
+      </p>
+      <div class="hero-cta">
+        <a href="#demo" class="btn btn-primary btn-lg" data-en="Try the demo ↓" data-es="Ver demo ↓">Try the demo ↓</a>
+        <a href="https://github.com/MauroLandivar/fill-my-resume" target="_blank" class="btn btn-ghost btn-lg" data-en="View on GitHub" data-es="Ver en GitHub">View on GitHub</a>
+      </div>
+      <p class="hero-note" data-en="Built for job seekers who apply to multiple roles per week." data-es="Creado para quienes aplican a múltiples empleos por semana.">Built for job seekers who apply to multiple roles per week.</p>
+    </div>
+    <div class="hero-visual">
+      <div class="panel-mockup">
+        <div class="mockup-header">
+          <span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span>
+          <span class="mockup-title">Fill My Resume</span>
+        </div>
+        <div class="mockup-fields">
+          <div class="mockup-field">
+            <span class="mockup-label" data-en="Full Name" data-es="Nombre completo">Full Name</span>
+            <span class="mockup-value">Alex Rivera</span>
+            <span class="mockup-copy">⌘C</span>
+          </div>
+          <div class="mockup-field">
+            <span class="mockup-label">Email</span>
+            <span class="mockup-value">alex@email.com</span>
+            <span class="mockup-copy">⌘C</span>
+          </div>
+          <div class="mockup-field">
+            <span class="mockup-label">LinkedIn</span>
+            <span class="mockup-value">linkedin.com/in/alex</span>
+            <span class="mockup-copy">⌘C</span>
+          </div>
+          <div class="mockup-field highlight">
+            <span class="mockup-label" data-en="Location" data-es="Ubicación">Location</span>
+            <span class="mockup-value" data-en="Bolivia — Remote" data-es="Bolivia — Remoto">Bolivia — Remote</span>
+            <span class="mockup-copy copied">✓</span>
+          </div>
+          <div class="mockup-ai">
+            <span class="mockup-ai-label" data-en="AI answer generated" data-es="Respuesta IA generada">AI answer generated</span>
+            <span class="mockup-ai-preview" data-en='"My prioritization process starts with discovery..."' data-es='"Mi proceso de priorización comienza con discovery..."'>"My prioritization process starts with discovery..."</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── How it works ─────────────────────────────────── -->
+<section class="section steps-section">
+  <div class="section-inner">
+    <h2 data-en="How it works" data-es="Cómo funciona">How it works</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">1</span>
+        <h3 data-en="Add your data once" data-es="Agrega tus datos una vez">Add your data once</h3>
+        <p data-en="Fill in your name, email, experience, skills and bio. Stored locally in your browser." data-es="Completa tu nombre, email, experiencia, habilidades y bio. Se guarda en tu navegador.">Fill in your name, email, experience, skills and bio. Stored locally in your browser.</p>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <h3 data-en="Open any job site" data-es="Abre cualquier portal">Open any job site</h3>
+        <p data-en="LinkedIn, Gupy, Indeed, Remotely — any platform where you fill out forms." data-es="LinkedIn, Gupy, Indeed, Remotely — cualquier plataforma con formularios.">LinkedIn, Gupy, Indeed, Remotely — any platform where you fill out forms.</p>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <h3 data-en="Click to copy & paste" data-es="Clic para copiar y pegar">Click to copy & paste</h3>
+        <p data-en="Click any field in the side panel — it copies instantly. Paste with Ctrl+V." data-es="Haz clic en cualquier campo del panel lateral — se copia al instante. Pega con Ctrl+V.">Click any field in the side panel — it copies instantly. Paste with Ctrl+V.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ─────────────────────────────────────── -->
+<section class="section features-section">
+  <div class="section-inner">
+    <h2 data-en="Everything you need" data-es="Todo lo que necesitás">Everything you need</h2>
+    <div class="features">
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+        </div>
+        <h3 data-en="Click to copy" data-es="Clic para copiar">Click to copy</h3>
+        <p data-en="Every field in your profile is one click away from your clipboard. No typing, no selecting." data-es="Cada campo de tu perfil está a un clic del portapapeles. Sin escribir, sin seleccionar.">Every field in your profile is one click away from your clipboard. No typing, no selecting.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+        </div>
+        <h3 data-en="AI response generator" data-es="Generador de respuestas IA">AI response generator</h3>
+        <p data-en="Paste any interview question and get a tailored answer powered by Claude, based on your actual CV." data-es="Pega cualquier pregunta de entrevista y obtén una respuesta personalizada con Claude, basada en tu CV real.">Paste any interview question and get a tailored answer powered by Claude, based on your actual CV.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3 data-en="Job tracker" data-es="Seguimiento de empleos">Job tracker</h3>
+        <p data-en="Keep track of every company you've applied to — status, salary target, star rating and notes." data-es="Lleva un registro de cada empresa — estado, salario esperado, puntuación y notas.">Keep track of every company you've applied to — status, salary target, star rating and notes.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        </div>
+        <h3 data-en="3 languages" data-es="3 idiomas">3 languages</h3>
+        <p data-en="Switch between English, Spanish and Portuguese instantly — all your CV data updates automatically." data-es="Cambia entre inglés, español y portugués al instante — todos tus datos se actualizan.">Switch between English, Spanish and Portuguese instantly — all your CV data updates automatically.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3 data-en="100% local" data-es="100% local">100% local</h3>
+        <p data-en="Your CV data never leaves your browser. No account, no server, no subscription." data-es="Tus datos nunca salen de tu navegador. Sin cuenta, sin servidor, sin suscripción.">Your CV data never leaves your browser. No account, no server, no subscription.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+        </div>
+        <h3 data-en="Chrome side panel" data-es="Panel lateral de Chrome">Chrome side panel</h3>
+        <p data-en="Runs as a native side panel — always visible while you browse, without covering the page." data-es="Funciona como panel lateral nativo — siempre visible mientras navegás, sin cubrir la página.">Runs as a native side panel — always visible while you browse, without covering the page.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Demo ─────────────────────────────────────────── -->
+<section class="section demo-section" id="demo">
+  <div class="section-inner">
+    <div class="demo-header">
+      <h2 data-en="Try it yourself" data-es="Probalo vos mismo">Try it yourself</h2>
+      <p data-en="This is the real panel. Click fields to copy, switch languages, generate AI responses." data-es="Este es el panel real. Haz clic en los campos para copiar, cambia idiomas, genera respuestas con IA.">This is the real panel. Click fields to copy, switch languages, generate AI responses.</p>
+    </div>
+    <div class="demo-frame-wrap">
+      <div class="demo-browser-bar">
+        <span class="demo-dot"></span><span class="demo-dot"></span><span class="demo-dot"></span>
+        <span class="demo-url" data-en="Fill My Resume — Live Demo" data-es="Fill My Resume — Demo en vivo">Fill My Resume — Live Demo</span>
+      </div>
+      <iframe
+        class="demo-frame"
+        src="prototype/index.html"
+        title="Fill My Resume interactive demo"
+        scrolling="yes"
+      ></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ── Download ─────────────────────────────────────── -->
+<section class="section download-section" id="download">
+  <div class="section-inner">
+    <h2 data-en="Get the extension" data-es="Descargá la extensión">Get the extension</h2>
+    <p class="download-sub" data-en="Load it in Chrome in under 2 minutes." data-es="Cárgala en Chrome en menos de 2 minutos.">Load it in Chrome in under 2 minutes.</p>
+    <div class="download-steps">
+      <div class="dl-step"><span class="dl-num">1</span><span data-en="Download the ZIP from GitHub" data-es="Descargá el ZIP de GitHub">Download the ZIP from GitHub</span></div>
+      <div class="dl-step"><span class="dl-num">2</span><span data-en="Open chrome://extensions and enable Developer mode" data-es="Abrí chrome://extensions y activá el Modo desarrollador">Open chrome://extensions and enable Developer mode</span></div>
+      <div class="dl-step"><span class="dl-num">3</span><span data-en='Click "Load unpacked" and select the extension/ folder' data-es='Clic en "Load unpacked" y seleccioná la carpeta extension/'>Click "Load unpacked" and select the extension/ folder</span></div>
+    </div>
+    <a href="https://github.com/MauroLandivar/fill-my-resume/archive/refs/heads/main.zip" class="btn btn-primary btn-lg" data-en="Download ZIP" data-es="Descargar ZIP">Download ZIP</a>
+  </div>
+</section>
+
+<!-- ── Footer ───────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="footer-logo">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+      Fill My Resume
+    </span>
+    <span class="footer-copy" data-en="Built with ♥ for job seekers." data-es="Hecho con ♥ para quienes buscan empleo.">Built with ♥ for job seekers.</span>
+    <a href="https://github.com/MauroLandivar/fill-my-resume" target="_blank" class="footer-link">GitHub</a>
+  </div>
+</footer>
+
+<script src="scripts/landing.js"></script>
+</body>
+</html>

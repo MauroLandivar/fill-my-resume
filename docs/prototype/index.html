@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fill My Resume — Side Panel</title>
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+
+<div class="panel">
+
+<!-- ── Global copy toast ──────────────────────────── -->
+<div id="global-toast">
+  <i data-lucide="check" width="13" height="13"></i>
+  <span id="toast-text">Copied!</span>
+</div>
+
+  <!-- ── Header ─────────────────────────────────────── -->
+  <header class="panel-header">
+    <span class="logo">
+      <i data-lucide="sparkles" width="20" height="20"></i>
+    </span>
+    <h1>Fill My Resume</h1>
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="es">ES</button>
+      <button class="lang-btn" data-lang="pt">PT</button>
+    </div>
+    <div class="avatar-wrap" id="avatar-wrap" title="Upload photo">
+      <img id="avatar-img" class="avatar-img" style="display:none;" alt="Profile photo" />
+      <span id="avatar-placeholder" class="avatar-placeholder">
+        <i data-lucide="camera" width="14" height="14"></i>
+      </span>
+      <input type="file" id="avatar-input" accept="image/*" style="display:none;" />
+    </div>
+  </header>
+
+  <!-- ── Scrollable body ────────────────────────────── -->
+  <div class="panel-body">
+
+    <!-- ── Perfil Personal ───────────────────────────── -->
+    <div class="accordion open">
+      <button class="accordion-trigger">
+        <span class="accordion-trigger-left">
+          <i data-lucide="user" width="16" height="16"></i>
+          <span class="section-label" data-en="Personal Profile" data-es="Perfil Personal" data-pt="Perfil Pessoal">Personal Profile</span>
+        </span>
+        <i data-lucide="chevron-down" width="16" height="16" class="chevron"></i>
+      </button>
+      <div class="accordion-content">
+
+        <div class="field-card" data-copy="Alex Rivera">
+          <span class="field-label" data-en="Full Name" data-es="Nombre completo" data-pt="Nome completo">Full Name</span>
+          <span class="field-value" data-en="Alex Rivera" data-es="Alex Rivera" data-pt="Alex Rivera">Alex Rivera</span>
+        </div>
+
+        <div class="field-card" data-copy="alex.rivera@email.com">
+          <span class="field-label" data-en="Email" data-es="Correo electrónico" data-pt="E-mail">Email</span>
+          <span class="field-value" data-en="alex.rivera@email.com" data-es="alex.rivera@email.com" data-pt="alex.rivera@email.com">alex.rivera@email.com</span>
+        </div>
+
+        <div class="field-card" data-copy="+591 70 000 000">
+          <span class="field-label" data-en="Phone" data-es="Teléfono" data-pt="Telefone">Phone</span>
+          <span class="field-value" data-en="+591 70 000 000" data-es="+591 70 000 000" data-pt="+591 70 000 000">+591 70 000 000</span>
+        </div>
+
+        <div class="field-card" data-copy="Bolivia — Open to remote">
+          <span class="field-label" data-en="Location" data-es="Ubicación" data-pt="Localização">Location</span>
+          <span class="field-value"
+            data-en="Bolivia — Open to remote"
+            data-es="Bolivia — Disponible para trabajo remoto"
+            data-pt="Bolívia — Disponível para trabalho remoto">Bolivia — Open to remote</span>
+        </div>
+
+        <div class="field-card" data-copy="linkedin.com/in/alexrivera">
+          <span class="field-label">LinkedIn</span>
+          <div class="field-row">
+            <span class="field-value">linkedin.com/in/alexrivera</span>
+            <a class="link-btn" href="https://linkedin.com/in/alexrivera" target="_blank" title="Open" onclick="event.stopPropagation()">
+              <i data-lucide="external-link" width="14" height="14"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="field-card" data-copy="github.com/alexrivera">
+          <span class="field-label">GitHub</span>
+          <div class="field-row">
+            <span class="field-value">github.com/alexrivera</span>
+            <a class="link-btn" href="https://github.com/alexrivera" target="_blank" title="Open" onclick="event.stopPropagation()">
+              <i data-lucide="external-link" width="14" height="14"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="field-card" data-copy="alexrivera.design">
+          <span class="field-label" data-en="Portfolio" data-es="Portafolio" data-pt="Portfólio">Portfolio</span>
+          <div class="field-row">
+            <span class="field-value">alexrivera.design</span>
+            <a class="link-btn" href="https://alexrivera.design" target="_blank" title="Open" onclick="event.stopPropagation()">
+              <i data-lucide="external-link" width="14" height="14"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Perfil Profesional ─────────────────────────── -->
+    <div class="accordion open">
+      <button class="accordion-trigger">
+        <span class="accordion-trigger-left">
+          <i data-lucide="briefcase" width="16" height="16"></i>
+          <span class="section-label" data-en="Professional Profile" data-es="Perfil Profesional" data-pt="Perfil Profissional">Professional Profile</span>
+        </span>
+        <i data-lucide="chevron-down" width="16" height="16" class="chevron"></i>
+      </button>
+      <div class="accordion-content">
+
+        <div class="field-card"
+          data-copy="Product Manager | Product Owner | Brand Manager"
+          data-en="Product Manager | Product Owner | Brand Manager"
+          data-es="Gerente de Producto | Product Owner | Brand Manager"
+          data-pt="Gerente de Produto | Product Owner | Brand Manager">
+          <span class="field-label" data-en="Occupation Title" data-es="Título de ocupación" data-pt="Título de ocupação">Occupation Title</span>
+          <span class="field-value"
+            data-en="Product Manager | Product Owner | Brand Manager"
+            data-es="Gerente de Producto | Product Owner | Brand Manager"
+            data-pt="Gerente de Produto | Product Owner | Brand Manager">Product Manager | Product Owner | Brand Manager</span>
+        </div>
+
+        <div class="field-card"
+          data-copy="I hold an MBA in Digital Business (USP-ESALQ) and a degree in Commercial Engineering. With over 7 years of international experience, I combine Brand Management with Product Management techniques. My superpower is transforming pain points into clear value. Languages: Spanish, English, and Portuguese.">
+          <span class="field-label" data-en="Bio / Summary" data-es="Resumen profesional" data-pt="Resumo profissional">Bio / Summary</span>
+          <span class="field-value multiline"
+            data-en="I hold an MBA in Digital Business (USP-ESALQ) and a degree in Commercial Engineering. With over 7 years of international experience, I combine Brand Management with Product Management techniques. My superpower is transforming pain points into clear value. Languages: Spanish, English, and Portuguese."
+            data-es="Tengo un MBA en Negocios Digitales (USP-ESALQ) y una licenciatura en Ingeniería Comercial. Con más de 7 años de experiencia internacional, combino Brand Management con técnicas de Product Management. Mi superpoder es transformar puntos de dolor en valor claro. Idiomas: Español, Inglés y Portugués."
+            data-pt="Tenho um MBA em Negócios Digitais (USP-ESALQ) e graduação em Engenharia Comercial. Com mais de 7 anos de experiência internacional, combino Brand Management com Product Management. Meu superpoder é transformar pontos de dor em valor claro. Idiomas: Espanhol, Inglês e Português.">I hold an MBA in Digital Business (USP-ESALQ) and a degree in Commercial Engineering. With over 7 years of international experience, I combine Brand Management with Product Management techniques. My superpower is transforming pain points into clear value. Languages: Spanish, English, and Portuguese.</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Experiencia Laboral ─────────────────────────── -->
+    <div class="accordion open">
+      <button class="accordion-trigger">
+        <span class="accordion-trigger-left">
+          <i data-lucide="building-2" width="16" height="16"></i>
+          <span class="section-label">Work Experience</span>
+          <span class="section-count">2</span>
+        </span>
+        <i data-lucide="chevron-down" width="16" height="16" class="chevron"></i>
+      </button>
+      <div class="accordion-content">
+
+        <!-- Entry 1 -->
+        <div class="entry-card open">
+          <button class="entry-trigger">
+            <span class="entry-trigger-left">
+              <i data-lucide="building" width="14" height="14" class="entry-icon"></i>
+              <span>
+                <div class="entry-title">Viva — Product Owner</div>
+                <div class="entry-subtitle">April 2019 – October 2021 · Bolivia · Hybrid</div>
+              </span>
+            </span>
+            <i data-lucide="chevron-down" width="14" height="14" class="entry-chevron"></i>
+          </button>
+          <div class="entry-body">
+
+            <!-- Date block -->
+            <div class="date-block">
+              <div class="date-block-header">
+                <i data-lucide="calendar" width="11" height="11"></i>
+                <span>Dates</span>
+              </div>
+              <div class="date-grid">
+                <div class="date-cell">
+                  <span class="date-cell-label">Start month</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">April</span>
+                    <button class="date-copy-btn" data-value="April" title="Copy month">
+                      <i data-lucide="copy" width="11" height="11"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">Start year</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">2019</span>
+                    <button class="date-copy-btn" data-value="2019" title="Copy year">
+                      <i data-lucide="copy" width="11" height="11"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">Start (full)</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">April 2019</span>
+                    <button class="date-copy-btn" data-value="April 2019" title="Copy full date">
+                      <i data-lucide="copy" width="11" height="11"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">End month</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">October</span>
+                    <button class="date-copy-btn" data-value="October" title="Copy month">
+                      <i data-lucide="copy" width="11" height="11"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">End year</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">2021</span>
+                    <button class="date-copy-btn" data-value="2021" title="Copy year">
+                      <i data-lucide="copy" width="11" height="11"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">End (full)</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">October 2021</span>
+                    <button class="date-copy-btn" data-value="October 2021" title="Copy full date">
+                      <i data-lucide="copy" width="11" height="11"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="entry-field">
+              <span class="entry-field-label">About the company</span>
+              <div class="entry-field-row">
+                <span class="entry-field-value">A telecommunications and technology company, the third-largest telecom in Bolivia, with more than 24% market share and over 2 million users.</span>
+                <button class="copy-btn" data-value="A telecommunications and technology company, the third-largest telecom in Bolivia, with more than 24% market share and over 2 million users." title="Copy">
+                  <i data-lucide="copy" width="13" height="13"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="entry-field">
+              <span class="entry-field-label">Responsibilities</span>
+              <div class="entry-field-row">
+                <span class="entry-field-value">As a Product Owner, I oversaw over $5M USD/month in revenue. I was responsible for the monetary impact of each product and coordinated with all areas of the company.</span>
+                <button class="copy-btn" data-value="As a Product Owner, I oversaw over $5M USD/month in revenue. I was responsible for the monetary impact of each product and coordinated with all areas of the company." title="Copy">
+                  <i data-lucide="copy" width="13" height="13"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="entry-field">
+              <span class="entry-field-label">Achievements</span>
+              <div class="entry-field-row">
+                <span class="entry-field-value">Led creation of 6 new products (+$20k USD/month). Created B2B offer retaining 48k users (churn &lt; 2%). Increased digital payments by 30% during COVID.</span>
+                <button class="copy-btn" data-value="Led creation of 6 new products (+$20k USD/month). Created B2B offer retaining 48k users (churn < 2%). Increased digital payments by 30% during COVID." title="Copy">
+                  <i data-lucide="copy" width="13" height="13"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="entry-field">
+              <span class="entry-field-label">Tools Used</span>
+              <div class="entry-field-row">
+                <span class="entry-field-value">Customer discovery calls, pricing simulations, small group profitability tests, Jira, Confluence.</span>
+                <button class="copy-btn" data-value="Customer discovery calls, pricing simulations, small group profitability tests, Jira, Confluence." title="Copy">
+                  <i data-lucide="copy" width="13" height="13"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Entry 2 — current job (no end date) -->
+        <div class="entry-card">
+          <button class="entry-trigger">
+            <span class="entry-trigger-left">
+              <i data-lucide="building" width="14" height="14" class="entry-icon"></i>
+              <span>
+                <div class="entry-title">TechCorp — Brand Manager</div>
+                <div class="entry-subtitle">January 2016 – Present · Brazil · On-site</div>
+              </span>
+            </span>
+            <i data-lucide="chevron-down" width="14" height="14" class="entry-chevron"></i>
+          </button>
+          <div class="entry-body">
+
+            <!-- Date block — current job -->
+            <div class="date-block">
+              <div class="date-block-header">
+                <i data-lucide="calendar" width="11" height="11"></i>
+                <span>Dates</span>
+              </div>
+              <div class="date-grid">
+                <div class="date-cell">
+                  <span class="date-cell-label">Start month</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">January</span>
+                    <button class="date-copy-btn" data-value="January" title="Copy month">
+                      <i data-lucide="copy" width="11" height="11"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">Start year</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">2016</span>
+                    <button class="date-copy-btn" data-value="2016" title="Copy year">
+                      <i data-lucide="copy" width="11" height="11"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">Start (full)</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">January 2016</span>
+                    <button class="date-copy-btn" data-value="January 2016" title="Copy full date">
+                      <i data-lucide="copy" width="11" height="11"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="date-cell" style="grid-column: span 3;">
+                  <span class="date-cell-label">End date</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value present">Present / Atual / Presente</span>
+                    <button class="date-copy-btn" data-value="Present" title="Copy Present">
+                      <i data-lucide="copy" width="11" height="11"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="entry-field">
+              <span class="entry-field-label">About the company</span>
+              <div class="entry-field-row">
+                <span class="entry-field-value">A multinational FMCG company operating in 12 countries across Latin America, focused on beverage and food products.</span>
+                <button class="copy-btn" data-value="A multinational FMCG company operating in 12 countries across Latin America, focused on beverage and food products." title="Copy">
+                  <i data-lucide="copy" width="13" height="13"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="entry-field">
+              <span class="entry-field-label">Responsibilities</span>
+              <div class="entry-field-row">
+                <span class="entry-field-value">Led brand strategy for 3 product lines. Managed $2M annual marketing budget. Coordinated cross-functional teams across 4 countries.</span>
+                <button class="copy-btn" data-value="Led brand strategy for 3 product lines. Managed $2M annual marketing budget. Coordinated cross-functional teams across 4 countries." title="Copy">
+                  <i data-lucide="copy" width="13" height="13"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="entry-field">
+              <span class="entry-field-label">Achievements</span>
+              <div class="entry-field-row">
+                <span class="entry-field-value">Grew brand awareness by 18% in 2 years. Launched 2 product lines that exceeded sales targets by 25%.</span>
+                <button class="copy-btn" data-value="Grew brand awareness by 18% in 2 years. Launched 2 product lines that exceeded sales targets by 25%." title="Copy">
+                  <i data-lucide="copy" width="13" height="13"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Educación ───────────────────────────────────── -->
+    <div class="accordion">
+      <button class="accordion-trigger">
+        <span class="accordion-trigger-left">
+          <i data-lucide="graduation-cap" width="16" height="16"></i>
+          <span class="section-label">Education</span>
+          <span class="section-count">2</span>
+        </span>
+        <i data-lucide="chevron-down" width="16" height="16" class="chevron"></i>
+      </button>
+      <div class="accordion-content">
+
+        <div class="entry-card">
+          <button class="entry-trigger">
+            <span class="entry-trigger-left">
+              <i data-lucide="book-open" width="14" height="14" class="entry-icon"></i>
+              <span>
+                <div class="entry-title">MBA — Digital Business</div>
+                <div class="entry-subtitle">USP-ESALQ · 2020 – 2022</div>
+              </span>
+            </span>
+            <i data-lucide="chevron-down" width="14" height="14" class="entry-chevron"></i>
+          </button>
+          <div class="entry-body">
+            <div class="date-block">
+              <div class="date-block-header">
+                <i data-lucide="calendar" width="11" height="11"></i>
+                <span>Dates</span>
+              </div>
+              <div class="date-grid">
+                <div class="date-cell">
+                  <span class="date-cell-label">Start year</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">2020</span>
+                    <button class="date-copy-btn" data-value="2020" title="Copy">
+                      <i data-lucide="copy" width="11" height="11"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">End year</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">2022</span>
+                    <button class="date-copy-btn" data-value="2022" title="Copy">
+                      <i data-lucide="copy" width="11" height="11"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">Range</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">2020 – 2022</span>
+                    <button class="date-copy-btn" data-value="2020 – 2022" title="Copy">
+                      <i data-lucide="copy" width="11" height="11"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="entry-field">
+              <span class="entry-field-label">Institution</span>
+              <div class="entry-field-row">
+                <span class="entry-field-value">USP-ESALQ, São Paulo, Brazil</span>
+                <button class="copy-btn" data-value="USP-ESALQ, São Paulo, Brazil" title="Copy">
+                  <i data-lucide="copy" width="13" height="13"></i>
+                </button>
+              </div>
+            </div>
+            <div class="entry-field">
+              <span class="entry-field-label">Degree</span>
+              <div class="entry-field-row">
+                <span class="entry-field-value">MBA in Digital Business</span>
+                <button class="copy-btn" data-value="MBA in Digital Business" title="Copy">
+                  <i data-lucide="copy" width="13" height="13"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="entry-card">
+          <button class="entry-trigger">
+            <span class="entry-trigger-left">
+              <i data-lucide="book-open" width="14" height="14" class="entry-icon"></i>
+              <span>
+                <div class="entry-title">Commercial Engineering</div>
+                <div class="entry-subtitle">Universidad Mayor · 2010 – 2015</div>
+              </span>
+            </span>
+            <i data-lucide="chevron-down" width="14" height="14" class="entry-chevron"></i>
+          </button>
+          <div class="entry-body">
+            <div class="entry-field">
+              <span class="entry-field-label">Institution</span>
+              <div class="entry-field-row">
+                <span class="entry-field-value">Universidad Mayor de San Andrés, Bolivia</span>
+                <button class="copy-btn" data-value="Universidad Mayor de San Andrés, Bolivia" title="Copy">
+                  <i data-lucide="copy" width="13" height="13"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Certificaciones ────────────────────────────── -->
+    <div class="accordion">
+      <button class="accordion-trigger">
+        <span class="accordion-trigger-left">
+          <i data-lucide="award" width="16" height="16"></i>
+          <span class="section-label">Certifications</span>
+          <span class="section-count">2</span>
+        </span>
+        <i data-lucide="chevron-down" width="16" height="16" class="chevron"></i>
+      </button>
+      <div class="accordion-content">
+
+        <div class="entry-card">
+          <button class="entry-trigger">
+            <span class="entry-trigger-left">
+              <i data-lucide="file-badge" width="14" height="14" class="entry-icon"></i>
+              <span>
+                <div class="entry-title">SQL Bootcamp</div>
+                <div class="entry-subtitle">Oct 2022 – Sep 2024</div>
+              </span>
+            </span>
+            <i data-lucide="chevron-down" width="14" height="14" class="entry-chevron"></i>
+          </button>
+          <div class="entry-body">
+            <div class="entry-field">
+              <span class="entry-field-label">Certificate Name</span>
+              <div class="entry-field-row">
+                <span class="entry-field-value">SQL Bootcamp</span>
+                <button class="copy-btn" data-value="SQL Bootcamp" title="Copy">
+                  <i data-lucide="copy" width="13" height="13"></i>
+                </button>
+              </div>
+            </div>
+            <div class="date-block">
+              <div class="date-block-header">
+                <i data-lucide="calendar" width="11" height="11"></i>
+                <span>Dates</span>
+              </div>
+              <div class="date-grid">
+                <div class="date-cell">
+                  <span class="date-cell-label">Start month</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">October</span>
+                    <button class="date-copy-btn" data-value="October" title="Copy"><i data-lucide="copy" width="11" height="11"></i></button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">Start year</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">2022</span>
+                    <button class="date-copy-btn" data-value="2022" title="Copy"><i data-lucide="copy" width="11" height="11"></i></button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">Start (full)</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">October 2022</span>
+                    <button class="date-copy-btn" data-value="October 2022" title="Copy"><i data-lucide="copy" width="11" height="11"></i></button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">End month</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">September</span>
+                    <button class="date-copy-btn" data-value="September" title="Copy"><i data-lucide="copy" width="11" height="11"></i></button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">End year</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">2024</span>
+                    <button class="date-copy-btn" data-value="2024" title="Copy"><i data-lucide="copy" width="11" height="11"></i></button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">End (full)</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">September 2024</span>
+                    <button class="date-copy-btn" data-value="September 2024" title="Copy"><i data-lucide="copy" width="11" height="11"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="entry-field">
+              <span class="entry-field-label">Certificate URL</span>
+              <div class="entry-field-row">
+                <span class="entry-field-value">udemy.com/certificate/sql-bootcamp-2024</span>
+                <button class="copy-btn" data-value="udemy.com/certificate/sql-bootcamp-2024" title="Copy">
+                  <i data-lucide="copy" width="13" height="13"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="entry-card">
+          <button class="entry-trigger">
+            <span class="entry-trigger-left">
+              <i data-lucide="file-badge" width="14" height="14" class="entry-icon"></i>
+              <span>
+                <div class="entry-title">Product Management — Reforge</div>
+                <div class="entry-subtitle">Jan 2023 – Jun 2023</div>
+              </span>
+            </span>
+            <i data-lucide="chevron-down" width="14" height="14" class="entry-chevron"></i>
+          </button>
+          <div class="entry-body">
+            <div class="entry-field">
+              <span class="entry-field-label">Certificate Name</span>
+              <div class="entry-field-row">
+                <span class="entry-field-value">Product Management — Reforge</span>
+                <button class="copy-btn" data-value="Product Management — Reforge" title="Copy">
+                  <i data-lucide="copy" width="13" height="13"></i>
+                </button>
+              </div>
+            </div>
+            <div class="date-block">
+              <div class="date-block-header">
+                <i data-lucide="calendar" width="11" height="11"></i>
+                <span>Dates</span>
+              </div>
+              <div class="date-grid">
+                <div class="date-cell">
+                  <span class="date-cell-label">Start month</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">January</span>
+                    <button class="date-copy-btn" data-value="January" title="Copy"><i data-lucide="copy" width="11" height="11"></i></button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">Start year</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">2023</span>
+                    <button class="date-copy-btn" data-value="2023" title="Copy"><i data-lucide="copy" width="11" height="11"></i></button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">Start (full)</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">January 2023</span>
+                    <button class="date-copy-btn" data-value="January 2023" title="Copy"><i data-lucide="copy" width="11" height="11"></i></button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">End month</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">June</span>
+                    <button class="date-copy-btn" data-value="June" title="Copy"><i data-lucide="copy" width="11" height="11"></i></button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">End year</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">2023</span>
+                    <button class="date-copy-btn" data-value="2023" title="Copy"><i data-lucide="copy" width="11" height="11"></i></button>
+                  </div>
+                </div>
+                <div class="date-cell">
+                  <span class="date-cell-label">End (full)</span>
+                  <div class="date-cell-row">
+                    <span class="date-cell-value">June 2023</span>
+                    <button class="date-copy-btn" data-value="June 2023" title="Copy"><i data-lucide="copy" width="11" height="11"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="entry-field">
+              <span class="entry-field-label">Certificate URL</span>
+              <div class="entry-field-row">
+                <span class="entry-field-value">reforge.com/certificates/pm-2023</span>
+                <button class="copy-btn" data-value="reforge.com/certificates/pm-2023" title="Copy">
+                  <i data-lucide="copy" width="13" height="13"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Skills ─────────────────────────────────────── -->
+    <div class="accordion">
+      <button class="accordion-trigger">
+        <span class="accordion-trigger-left">
+          <i data-lucide="zap" width="16" height="16"></i>
+          <span class="section-label" data-en="Skills" data-es="Habilidades" data-pt="Habilidades">Skills</span>
+        </span>
+        <i data-lucide="chevron-down" width="16" height="16" class="chevron"></i>
+      </button>
+      <div class="accordion-content">
+        <p class="section-hint" data-en="Click any skill to copy it" data-es="Haz clic en una habilidad para copiarla" data-pt="Clique em uma habilidade para copiá-la">Click any skill to copy it</p>
+        <div class="tags-wrap">
+          <span class="tag">Product Management</span>
+          <span class="tag">Product Discovery</span>
+          <span class="tag">OKRs</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Jira</span>
+          <span class="tag">Confluence</span>
+          <span class="tag">Figma</span>
+          <span class="tag">Brand Strategy</span>
+          <span class="tag">B2B Sales</span>
+          <span class="tag">Agile / Scrum</span>
+          <span class="tag">Data Analysis</span>
+          <span class="tag">Stakeholder Management</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Idiomas ─────────────────────────────────────── -->
+    <div class="accordion">
+      <button class="accordion-trigger">
+        <span class="accordion-trigger-left">
+          <i data-lucide="languages" width="16" height="16"></i>
+          <span class="section-label" data-en="Languages" data-es="Idiomas" data-pt="Idiomas">Languages</span>
+        </span>
+        <i data-lucide="chevron-down" width="16" height="16" class="chevron"></i>
+      </button>
+      <div class="accordion-content">
+        <p class="section-hint" data-en="Click any language to copy it" data-es="Haz clic en un idioma para copiarlo" data-pt="Clique em um idioma para copiá-lo">Click any language to copy it</p>
+        <div class="tags-wrap">
+          <span class="tag"
+            data-en="Spanish — Native"
+            data-es="Español — Nativo"
+            data-pt="Espanhol — Nativo">Spanish — Native</span>
+          <span class="tag"
+            data-en="English — Fluent"
+            data-es="Inglés — Fluido"
+            data-pt="Inglês — Fluente">English — Fluent</span>
+          <span class="tag"
+            data-en="Portuguese — Fluent"
+            data-es="Portugués — Fluido"
+            data-pt="Português — Fluente">Portuguese — Fluent</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Interview Tracker ─────────────────────────── -->
+    <div class="accordion open interview-section">
+      <button class="accordion-trigger">
+        <span class="accordion-trigger-left">
+          <i data-lucide="clipboard-list" width="16" height="16"></i>
+          <span class="section-label">Interview Tracker</span>
+          <span class="section-count" id="company-count">2</span>
+        </span>
+        <i data-lucide="chevron-down" width="16" height="16" class="chevron"></i>
+      </button>
+      <div class="accordion-content" id="company-list">
+
+        <!-- Company 1 -->
+        <div class="company-entry open" data-id="1">
+          <div class="company-trigger">
+            <button class="company-toggle">
+              <span class="entry-trigger-left">
+                <i data-lucide="building-2" width="14" height="14" class="entry-icon"></i>
+                <span>
+                  <div class="entry-title">TechFlow — Product Manager</div>
+                  <div class="entry-subtitle">Applied Apr 2026</div>
+                </span>
+              </span>
+              <span class="company-trigger-right">
+                <span class="status-badge-mini interview">Interview</span>
+                <i data-lucide="chevron-down" width="14" height="14" class="entry-chevron"></i>
+              </span>
+            </button>
+            <button class="company-delete-btn" data-id="1" title="Remove company">
+              <i data-lucide="x" width="13" height="13"></i>
+            </button>
+          </div>
+          <div class="company-body">
+
+            <div class="field-card" style="cursor:default;">
+              <span class="field-label">How much do I like this company?</span>
+              <div class="star-rating" data-rating="4">
+                <button class="star" data-value="1"><i data-lucide="star" width="18" height="18"></i></button>
+                <button class="star" data-value="2"><i data-lucide="star" width="18" height="18"></i></button>
+                <button class="star" data-value="3"><i data-lucide="star" width="18" height="18"></i></button>
+                <button class="star" data-value="4"><i data-lucide="star" width="18" height="18"></i></button>
+                <button class="star" data-value="5"><i data-lucide="star" width="18" height="18"></i></button>
+              </div>
+            </div>
+
+            <div class="field-card" style="cursor:default;">
+              <span class="field-label">Desired Salary</span>
+              <div class="field-row">
+                <div class="salary-display">
+                  <span class="salary-currency">USD</span>
+                  <span class="salary-value" contenteditable="true" spellcheck="false">5,500 / month</span>
+                </div>
+                <button class="copy-btn salary-copy" data-value="5500" title="Copy number">
+                  <i data-lucide="copy" width="14" height="14"></i>
+                </button>
+              </div>
+              <div class="salary-hint">Click value to edit</div>
+            </div>
+
+            <div class="field-card" style="cursor:default;">
+              <span class="field-label">Application Status</span>
+              <div class="status-pills">
+                <button class="status-pill" data-status="applied">Applied</button>
+                <button class="status-pill active" data-status="interview">Interview</button>
+                <button class="status-pill" data-status="offer">Offer</button>
+                <button class="status-pill" data-status="rejected">Rejected</button>
+              </div>
+            </div>
+
+            <div class="field-card notes-card" style="cursor:default;">
+              <span class="field-label">Notes & Company Details</span>
+              <textarea class="notes-textarea" placeholder="Company notes, hiring manager, salary range discussed, questions to ask...">Remote-first, Series B. Hiring manager: Clara Mendes. Role: discovery &amp; research. Stack: Jira + Notion. 8 PMs globally. Range: $5k–$6k/month.</textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Company 2 -->
+        <div class="company-entry" data-id="2">
+          <div class="company-trigger">
+            <button class="company-toggle">
+              <span class="entry-trigger-left">
+                <i data-lucide="building-2" width="14" height="14" class="entry-icon"></i>
+                <span>
+                  <div class="entry-title">Globant — Product Owner</div>
+                  <div class="entry-subtitle">Applied Mar 2026</div>
+                </span>
+              </span>
+              <span class="company-trigger-right">
+                <span class="status-badge-mini applied">Applied</span>
+                <i data-lucide="chevron-down" width="14" height="14" class="entry-chevron"></i>
+              </span>
+            </button>
+            <button class="company-delete-btn" data-id="2" title="Remove company">
+              <i data-lucide="x" width="13" height="13"></i>
+            </button>
+          </div>
+          <div class="company-body">
+
+            <div class="field-card" style="cursor:default;">
+              <span class="field-label">How much do I like this company?</span>
+              <div class="star-rating" data-rating="3">
+                <button class="star" data-value="1"><i data-lucide="star" width="18" height="18"></i></button>
+                <button class="star" data-value="2"><i data-lucide="star" width="18" height="18"></i></button>
+                <button class="star" data-value="3"><i data-lucide="star" width="18" height="18"></i></button>
+                <button class="star" data-value="4"><i data-lucide="star" width="18" height="18"></i></button>
+                <button class="star" data-value="5"><i data-lucide="star" width="18" height="18"></i></button>
+              </div>
+            </div>
+
+            <div class="field-card" style="cursor:default;">
+              <span class="field-label">Desired Salary</span>
+              <div class="field-row">
+                <div class="salary-display">
+                  <span class="salary-currency">USD</span>
+                  <span class="salary-value" contenteditable="true" spellcheck="false">4,800 / month</span>
+                </div>
+                <button class="copy-btn salary-copy" data-value="4800" title="Copy number">
+                  <i data-lucide="copy" width="14" height="14"></i>
+                </button>
+              </div>
+              <div class="salary-hint">Click value to edit</div>
+            </div>
+
+            <div class="field-card" style="cursor:default;">
+              <span class="field-label">Application Status</span>
+              <div class="status-pills">
+                <button class="status-pill active" data-status="applied">Applied</button>
+                <button class="status-pill" data-status="interview">Interview</button>
+                <button class="status-pill" data-status="offer">Offer</button>
+                <button class="status-pill" data-status="rejected">Rejected</button>
+              </div>
+            </div>
+
+            <div class="field-card notes-card" style="cursor:default;">
+              <span class="field-label">Notes & Company Details</span>
+              <textarea class="notes-textarea" placeholder="Company notes...">Large consultancy, 26k employees. Role is internal product for a fintech client. Mixed reviews on Glassdoor. Recruiter: Daniela Torres.</textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Add company button -->
+        <button class="add-company-btn" id="add-company-btn">
+          <i data-lucide="plus" width="14" height="14"></i>
+          Add company
+        </button>
+
+      </div>
+    </div>
+
+    <!-- ── AI Assistant ────────────────────────────────── -->
+    <div class="accordion open ai-section">
+      <button class="accordion-trigger">
+        <span class="accordion-trigger-left">
+          <i data-lucide="sparkles" width="16" height="16"></i>
+          <span class="section-label">AI Assistant</span>
+          <span class="section-count ai-badge">Beta</span>
+        </span>
+        <i data-lucide="chevron-down" width="16" height="16" class="chevron"></i>
+      </button>
+      <div class="accordion-content">
+
+        <!-- Job vacancy URL -->
+        <div class="field-card" data-copy="">
+          <span class="field-label">
+            <i data-lucide="link" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px;"></i>
+            Job Vacancy URL
+          </span>
+          <div class="field-row">
+            <input class="inline-input" type="url" placeholder="https://jobs.gupy.io/apply/..." id="job-url" />
+            <a class="link-btn" id="job-url-open" href="#" target="_blank" title="Open job" onclick="event.stopPropagation()">
+              <i data-lucide="external-link" width="14" height="14"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Writing style sample -->
+        <div class="field-card notes-card" style="cursor:default;">
+          <span class="field-label">
+            <i data-lucide="pen-line" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px;"></i>
+            Your Writing Style Sample
+          </span>
+          <textarea class="notes-textarea" id="writing-sample" placeholder="Paste an email, message or text you wrote — so the AI writes in your voice...">Hi Clara, thanks for reaching out! Really excited about this opportunity at TechFlow. I've been following the company's growth in the PLG space and it aligns perfectly with the kind of impact I want to create. Happy to jump on a quick call this week — I'm flexible Thursday or Friday afternoon. Let me know what works best for you.</textarea>
+        </div>
+
+        <!-- Q&A -->
+        <div class="ai-qa-block">
+          <span class="field-label" style="padding: 0 0 6px;">
+            <i data-lucide="message-circle-question" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px;"></i>
+            Question from the company
+          </span>
+          <textarea class="notes-textarea ai-question" id="ai-question" placeholder="Ex: What would be your process for prioritizing features?&#10;Ex: Why do you think you're a good fit for this role?&#10;Ex: How would you handle a conflict with a stakeholder?"></textarea>
+          <button class="generate-btn" id="generate-btn">
+            <i data-lucide="sparkles" width="14" height="14"></i>
+            Generate response
+          </button>
+        </div>
+
+        <!-- AI Response -->
+        <div class="ai-response-block" id="ai-response-block">
+          <div class="ai-response-header">
+            <span class="field-label">Generated response</span>
+            <button class="copy-btn ai-copy-btn" id="copy-response-btn" title="Copy response">
+              <i data-lucide="copy" width="13" height="13"></i>
+            </button>
+          </div>
+          <textarea class="notes-textarea ai-response-text" id="ai-response-text" readonly>Based on your CV and the job description, here's a tailored response:
+
+"My process for feature prioritization starts with customer discovery — I use a mix of direct interviews and usage data to understand which pain points have the highest business impact. At Viva, for example, I led the prioritization of 6 new products by combining NPS feedback with revenue modeling, which resulted in a $20k+/month revenue increase.
+
+I typically use a lightweight scoring matrix (Impact × Effort) anchored to OKRs, and then validate assumptions with small-scale tests before committing engineering resources. The key for me is always aligning the roadmap to measurable outcomes, not just shipping features."
+
+— Tailored to: Product Manager role · Matches your writing style</textarea>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /panel-body -->
+
+  <!-- ── Footer ─────────────────────────────────────── -->
+  <footer class="panel-footer">
+    <button class="edit-btn" id="edit-profile-btn">
+      <i data-lucide="pencil" width="14" height="14"></i>
+      Edit Profile
+    </button>
+  </footer>
+
+</div><!-- /panel -->
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>
