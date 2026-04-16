@@ -722,7 +722,7 @@ async function parseCvWithClaude(text, apiKey) {
       max_tokens: 4096,
       messages: [{
         role: 'user',
-        content: `${CV_PARSE_PROMPT}\n\nCV TEXT:\n${text.slice(0, 12000)}`
+        content: `${CV_PARSE_PROMPT}\n\nCV TEXT:\n${text.slice(0, 20000)}`
       }]
     }),
   });
