@@ -978,10 +978,64 @@ I typically use a lightweight scoring matrix (Impact × Effort) anchored to OKRs
       <i data-lucide="pencil" width="14" height="14"></i>
       Edit Profile
     </button>
+    <button class="upload-cv-btn" id="upload-cv-btn">
+      <i data-lucide="upload" width="14" height="14"></i>
+      Cargar CV
+    </button>
   </footer>
+
+  <!-- ── Upload CV modal ────────────────────────────── -->
+  <div id="upload-modal" class="api-modal-overlay hidden">
+    <div class="api-modal-card">
+      <div class="api-modal-header">
+        <i data-lucide="file-up" width="18" height="18"></i>
+        <h2>Cargar CV</h2>
+      </div>
+      <p class="api-modal-desc">Seleccioná tu CV en PDF o Word. Claude va a leerlo y completar tu perfil automáticamente.</p>
+      <p class="api-modal-desc" style="font-size:11px;color:#aaa;">Google Docs: exportalo como PDF o Word primero.</p>
+      <div id="upload-drop-zone" class="upload-drop-zone">
+        <i data-lucide="file-text" width="28" height="28"></i>
+        <span id="upload-file-name">PDF o Word (.docx)</span>
+        <input type="file" id="cv-file-input" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display:none;" />
+      </div>
+      <div id="upload-error" class="api-modal-error hidden"></div>
+      <div class="api-modal-actions">
+        <button id="upload-cancel" class="api-cancel-btn">Cancelar</button>
+        <button id="upload-process" class="api-save-btn" disabled>
+          <i data-lucide="sparkles" width="13" height="13"></i>
+          Analizar con Claude
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Review modal ───────────────────────────────── -->
+  <div id="review-modal" class="api-modal-overlay hidden">
+    <div class="review-card">
+      <div class="review-header">
+        <div class="api-modal-header">
+          <i data-lucide="check-circle" width="18" height="18" style="color:#16a34a;"></i>
+          <h2>Revisá tu perfil</h2>
+        </div>
+        <p class="api-modal-desc">Claude completó los campos. Editá lo que necesites y guardá.</p>
+      </div>
+      <div class="review-body" id="review-body">
+        <!-- Populated by JS -->
+      </div>
+      <div class="review-footer">
+        <button id="review-cancel" class="api-cancel-btn">Descartar</button>
+        <button id="review-save" class="api-save-btn">
+          <i data-lucide="save" width="13" height="13"></i>
+          Guardar perfil
+        </button>
+      </div>
+    </div>
+  </div>
 
 </div><!-- /panel -->
 
+<script src="../libs/pdf.min.js"></script>
+<script src="../libs/mammoth.min.js"></script>
 <script src="../libs/lucide.min.js"></script>
 <script src="sidepanel.js"></script>
 </body>

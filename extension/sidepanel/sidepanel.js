@@ -581,6 +581,390 @@ document.getElementById('copy-response-btn')?.addEventListener('click', () => {
 
 document.getElementById('ai-response-block').style.display = 'none';
 
+// ── Cargar CV ─────────────────────────────────────────
+const uploadModal   = document.getElementById('upload-modal');
+const reviewModal   = document.getElementById('review-modal');
+const cvFileInput   = document.getElementById('cv-file-input');
+const uploadDropZone = document.getElementById('upload-drop-zone');
+const uploadFileName = document.getElementById('upload-file-name');
+const uploadProcess = document.getElementById('upload-process');
+const uploadError   = document.getElementById('upload-error');
+let selectedCvFile  = null;
+
+document.getElementById('upload-cv-btn').addEventListener('click', async () => {
+  const key = await getDecryptedKey();
+  if (!key) { openApiModal(); return; }
+  selectedCvFile = null;
+  uploadProcess.disabled = true;
+  uploadFileName.textContent = 'PDF o Word (.docx)';
+  uploadDropZone.classList.remove('has-file');
+  uploadError.classList.add('hidden');
+  uploadModal.classList.remove('hidden');
+  lucide.createIcons({ nodes: [uploadModal] });
+});
+
+document.getElementById('upload-cancel').addEventListener('click', () => uploadModal.classList.add('hidden'));
+uploadModal.addEventListener('click', (e) => { if (e.target === uploadModal) uploadModal.classList.add('hidden'); });
+
+uploadDropZone.addEventListener('click', () => cvFileInput.click());
+uploadDropZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadDropZone.classList.add('has-file'); });
+uploadDropZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  const file = e.dataTransfer.files[0];
+  if (file) handleFileSelected(file);
+});
+
+cvFileInput.addEventListener('change', () => {
+  if (cvFileInput.files[0]) handleFileSelected(cvFileInput.files[0]);
+  cvFileInput.value = '';
+});
+
+function handleFileSelected(file) {
+  const allowed = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+  const extOk = file.name.endsWith('.pdf') || file.name.endsWith('.docx');
+  if (!allowed.includes(file.type) && !extOk) {
+    uploadError.textContent = 'Formato no compatible. Usá PDF o Word (.docx).';
+    uploadError.classList.remove('hidden');
+    return;
+  }
+  selectedCvFile = file;
+  uploadFileName.textContent = file.name;
+  uploadDropZone.classList.add('has-file');
+  uploadProcess.disabled = false;
+  uploadError.classList.add('hidden');
+}
+
+// ── Extract text from file ────────────────────────────
+async function extractTextFromPdf(file) {
+  const arrayBuffer = await file.arrayBuffer();
+  const pdfjsLib = window['pdfjs-dist/build/pdf'];
+  pdfjsLib.GlobalWorkerOptions.workerSrc = chrome.runtime.getURL('libs/pdf.worker.min.js');
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  let text = '';
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    text += content.items.map(item => item.str).join(' ') + '\n';
+  }
+  return text;
+}
+
+async function extractTextFromDocx(file) {
+  const arrayBuffer = await file.arrayBuffer();
+  const result = await mammoth.extractRawText({ arrayBuffer });
+  return result.value;
+}
+
+async function extractText(file) {
+  if (file.name.endsWith('.pdf') || file.type === 'application/pdf') {
+    return await extractTextFromPdf(file);
+  }
+  return await extractTextFromDocx(file);
+}
+
+// ── Parse CV with Claude ──────────────────────────────
+const CV_PARSE_PROMPT = `You are a CV parser. Extract all information from the CV text below and return ONLY a valid JSON object — no explanation, no markdown, no extra text.
+
+JSON structure:
+{
+  "fullName": "",
+  "email": "",
+  "phone": "",
+  "location": "",
+  "linkedin": "",
+  "github": "",
+  "portfolio": "",
+  "occupationTitle": "",
+  "bio": "",
+  "workExperience": [
+    {
+      "company": "",
+      "role": "",
+      "startMonth": "",
+      "startYear": "",
+      "endMonth": "",
+      "endYear": "",
+      "current": false,
+      "country": "",
+      "contractType": "",
+      "aboutCompany": "",
+      "responsibilities": "",
+      "achievements": "",
+      "tools": ""
+    }
+  ],
+  "education": [
+    { "degree": "", "institution": "", "startYear": "", "endYear": "" }
+  ],
+  "certifications": [
+    { "name": "", "url": "" }
+  ],
+  "skills": [],
+  "languages": []
+}
+
+If a field is not found, leave it as empty string or empty array. Return ONLY the JSON.`;
+
+async function parseCvWithClaude(text, apiKey) {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true',
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 2048,
+      messages: [{
+        role: 'user',
+        content: `${CV_PARSE_PROMPT}\n\nCV TEXT:\n${text.slice(0, 12000)}`
+      }]
+    }),
+  });
+  if (!res.ok) throw new Error(`API ${res.status}`);
+  const data = await res.json();
+  const raw = data.content[0].text.trim();
+  const jsonStart = raw.indexOf('{');
+  const jsonEnd = raw.lastIndexOf('}');
+  return JSON.parse(raw.slice(jsonStart, jsonEnd + 1));
+}
+
+// ── Review modal ──────────────────────────────────────
+function buildReviewModal(cv) {
+  const body = document.getElementById('review-body');
+  body.innerHTML = '';
+
+  const section = (title, html) => {
+    const div = document.createElement('div');
+    div.innerHTML = `<div class="review-section-title">${title}</div>${html}`;
+    body.appendChild(div);
+  };
+
+  const field = (label, name, value, multiline = false) => {
+    const tag = multiline ? 'textarea' : 'input';
+    const rows = multiline ? ' rows="3"' : '';
+    return `<div class="review-field">
+      <label>${label}</label>
+      <${tag} class="review-input" data-review-field="${name}"${rows}>${multiline ? (value || '') : ''}</${tag}>
+      ${!multiline ? `<script>document.querySelector('[data-review-field="${name}"]').value=${JSON.stringify(value || '')}<\/script>` : ''}
+    </div>`;
+  };
+
+  // Personal
+  section('Perfil Personal', [
+    field('Nombre completo', 'fullName', cv.fullName),
+    field('Email', 'email', cv.email),
+    field('Teléfono', 'phone', cv.phone),
+    field('Ubicación', 'location', cv.location),
+    field('LinkedIn', 'linkedin', cv.linkedin),
+    field('GitHub', 'github', cv.github),
+    field('Portfolio', 'portfolio', cv.portfolio),
+  ].join(''));
+
+  // Professional
+  section('Perfil Profesional', [
+    field('Título', 'occupationTitle', cv.occupationTitle),
+    field('Bio / Resumen', 'bio', cv.bio, true),
+  ].join(''));
+
+  // Work experience
+  if (cv.workExperience?.length) {
+    const cards = cv.workExperience.map((job, i) => `
+      <div class="review-entry-card">
+        <div class="review-entry-title">${job.company || ''} — ${job.role || ''}</div>
+        <div class="review-field"><label>Empresa</label>
+          <input class="review-input" data-review-field="we_${i}_company" value="${(job.company||'').replace(/"/g,'&quot;')}"></div>
+        <div class="review-field"><label>Rol</label>
+          <input class="review-input" data-review-field="we_${i}_role" value="${(job.role||'').replace(/"/g,'&quot;')}"></div>
+        <div class="review-field"><label>Inicio</label>
+          <input class="review-input" data-review-field="we_${i}_start" value="${[job.startMonth, job.startYear].filter(Boolean).join(' ')}"></div>
+        <div class="review-field"><label>Fin</label>
+          <input class="review-input" data-review-field="we_${i}_end" value="${job.current ? 'Present' : [job.endMonth, job.endYear].filter(Boolean).join(' ')}"></div>
+        <div class="review-field"><label>País / Modalidad</label>
+          <input class="review-input" data-review-field="we_${i}_location" value="${[job.country, job.contractType].filter(Boolean).join(' · ')}"></div>
+        <div class="review-field"><label>Sobre la empresa</label>
+          <textarea class="review-input" data-review-field="we_${i}_about" rows="2">${job.aboutCompany||''}</textarea></div>
+        <div class="review-field"><label>Responsabilidades</label>
+          <textarea class="review-input" data-review-field="we_${i}_resp" rows="3">${job.responsibilities||''}</textarea></div>
+        <div class="review-field"><label>Logros</label>
+          <textarea class="review-input" data-review-field="we_${i}_ach" rows="2">${job.achievements||''}</textarea></div>
+        <div class="review-field"><label>Herramientas</label>
+          <input class="review-input" data-review-field="we_${i}_tools" value="${(job.tools||'').replace(/"/g,'&quot;')}"></div>
+      </div>`).join('');
+    section('Experiencia Laboral', cards);
+  }
+
+  // Education
+  if (cv.education?.length) {
+    const cards = cv.education.map((edu, i) => `
+      <div class="review-entry-card">
+        <div class="review-field"><label>Institución</label>
+          <input class="review-input" data-review-field="edu_${i}_inst" value="${(edu.institution||'').replace(/"/g,'&quot;')}"></div>
+        <div class="review-field"><label>Título</label>
+          <input class="review-input" data-review-field="edu_${i}_degree" value="${(edu.degree||'').replace(/"/g,'&quot;')}"></div>
+        <div class="review-field"><label>Años</label>
+          <input class="review-input" data-review-field="edu_${i}_years" value="${[edu.startYear, edu.endYear].filter(Boolean).join(' – ')}"></div>
+      </div>`).join('');
+    section('Educación', cards);
+  }
+
+  // Skills
+  section('Habilidades', `<div class="review-field">
+    <label>Skills (separadas por coma)</label>
+    <textarea class="review-input" data-review-field="skills" rows="3">${(cv.skills||[]).join(', ')}</textarea>
+  </div>`);
+
+  // Languages
+  section('Idiomas', `<div class="review-field">
+    <label>Idiomas (uno por línea, ej: English — Fluent)</label>
+    <textarea class="review-input" data-review-field="languages" rows="3">${(cv.languages||[]).join('\n')}</textarea>
+  </div>`);
+
+  lucide.createIcons({ nodes: [body] });
+}
+
+uploadProcess.addEventListener('click', async () => {
+  if (!selectedCvFile) return;
+  uploadProcess.disabled = true;
+  uploadProcess.innerHTML = '<i data-lucide="loader" width="13" height="13"></i> Analizando...';
+  lucide.createIcons({ nodes: [uploadProcess] });
+  uploadError.classList.add('hidden');
+
+  try {
+    const apiKey = await getDecryptedKey();
+    const text = await extractText(selectedCvFile);
+    const cv = await parseCvWithClaude(text, apiKey);
+    uploadModal.classList.add('hidden');
+    buildReviewModal(cv);
+    reviewModal.classList.remove('hidden');
+    lucide.createIcons({ nodes: [reviewModal] });
+  } catch (err) {
+    uploadError.textContent = `Error: ${err.message}. Verificá tu API key o el archivo.`;
+    uploadError.classList.remove('hidden');
+  } finally {
+    uploadProcess.disabled = false;
+    uploadProcess.innerHTML = '<i data-lucide="sparkles" width="13" height="13"></i> Analizar con Claude';
+    lucide.createIcons({ nodes: [uploadProcess] });
+  }
+});
+
+document.getElementById('review-cancel').addEventListener('click', () => reviewModal.classList.add('hidden'));
+
+document.getElementById('review-save').addEventListener('click', async () => {
+  const get = (name) => document.querySelector(`[data-review-field="${name}"]`)?.value?.trim() || '';
+
+  // ── Simple field map ──────────────────────────────
+  const simpleFields = {
+    fullName:        '.field-card[data-copy] .field-value[data-en]',
+    email:           null,
+    phone:           null,
+    location:        null,
+    occupationTitle: null,
+    bio:             null,
+  };
+
+  // Update by finding field labels
+  document.querySelectorAll('.field-card').forEach(card => {
+    const label = card.querySelector('.field-label')?.textContent?.trim().toLowerCase();
+    const valueEl = card.querySelector('.field-value');
+    if (!valueEl) return;
+    const map = {
+      'full name': 'fullName', 'nombre completo': 'fullName', 'nome completo': 'fullName',
+      'email': 'email', 'correo electrónico': 'email', 'e-mail': 'email',
+      'phone': 'phone', 'teléfono': 'phone', 'telefone': 'phone',
+      'location': 'location', 'ubicación': 'location', 'localização': 'location',
+      'linkedin': 'linkedin',
+      'github': 'github',
+      'portfolio': 'portfolio', 'portafolio': 'portfolio', 'portfólio': 'portfolio',
+      'occupation title': 'occupationTitle', 'título de ocupación': 'occupationTitle',
+      'bio / summary': 'bio', 'resumen profesional': 'bio', 'resumo profissional': 'bio',
+    };
+    const fieldKey = map[label];
+    if (fieldKey) {
+      const val = get(fieldKey);
+      if (val) {
+        valueEl.textContent = val;
+        card.dataset.copy = val;
+      }
+    }
+  });
+
+  // ── Work experience ───────────────────────────────
+  const weCount = document.querySelectorAll('[data-review-field^="we_"][data-review-field$="_company"]').length;
+  const weContainer = document.querySelector('.accordion-content');
+  const existingEntries = document.querySelectorAll('.entry-card');
+
+  for (let i = 0; i < weCount; i++) {
+    const company  = get(`we_${i}_company`);
+    const role     = get(`we_${i}_role`);
+    const start    = get(`we_${i}_start`);
+    const end      = get(`we_${i}_end`);
+    const location = get(`we_${i}_location`);
+    const about    = get(`we_${i}_about`);
+    const resp     = get(`we_${i}_resp`);
+    const ach      = get(`we_${i}_ach`);
+    const tools    = get(`we_${i}_tools`);
+
+    const entry = existingEntries[i];
+    if (entry) {
+      const setField = (label, val) => {
+        entry.querySelectorAll('.entry-field').forEach(f => {
+          if (f.querySelector('.entry-field-label')?.textContent?.toLowerCase().includes(label)) {
+            const v = f.querySelector('.entry-field-value');
+            if (v && val) { v.textContent = val; f.querySelector('[data-value]') && (f.querySelector('[data-value]').dataset.value = val); }
+          }
+        });
+      };
+      const titleEl = entry.querySelector('.entry-title');
+      const subtitleEl = entry.querySelector('.entry-subtitle');
+      if (titleEl && company) titleEl.textContent = `${company} — ${role}`;
+      if (subtitleEl && start) subtitleEl.textContent = `${start} – ${end}${location ? ' · ' + location : ''}`;
+      setField('about', about);
+      setField('responsib', resp);
+      setField('achiev', ach);
+      setField('tools', tools);
+    }
+  }
+
+  // ── Skills ────────────────────────────────────────
+  const skillsVal = get('skills');
+  if (skillsVal) {
+    const skillsList = skillsVal.split(',').map(s => s.trim()).filter(Boolean);
+    document.querySelectorAll('.accordion').forEach(acc => {
+      const label = acc.querySelector('.section-label')?.textContent?.trim().toLowerCase();
+      if (label?.includes('skill') || label?.includes('habilidad')) {
+        const wrap = acc.querySelector('.tags-wrap');
+        if (wrap) {
+          wrap.innerHTML = skillsList.map(s => `<span class="tag">${s}</span>`).join('');
+          setupTags();
+        }
+      }
+    });
+  }
+
+  // ── Languages ─────────────────────────────────────
+  const langsVal = get('languages');
+  if (langsVal) {
+    const langList = langsVal.split('\n').map(s => s.trim()).filter(Boolean);
+    document.querySelectorAll('.accordion').forEach(acc => {
+      const label = acc.querySelector('.section-label')?.textContent?.trim().toLowerCase();
+      if (label?.includes('language') || label?.includes('idioma')) {
+        const wrap = acc.querySelector('.tags-wrap');
+        if (wrap) {
+          wrap.innerHTML = langList.map(s => `<span class="tag">${s}</span>`).join('');
+          setupTags();
+        }
+      }
+    });
+  }
+
+  await saveToStorage();
+  reviewModal.classList.add('hidden');
+  showToast('Perfil actualizado!');
+});
+
 // ── Init ──────────────────────────────────────────────
 lucide.createIcons();
 initApiKeyStatus();
