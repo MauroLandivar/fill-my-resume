@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Fill My Resume",
+  "version": "1.0.0",
+  "description": "Keep your CV data always accessible while you browse job platforms.",
+  "permissions": ["storage", "sidePanel"],
+  "host_permissions": ["https://api.anthropic.com/*"],
+  "side_panel": {
+    "default_path": "sidepanel/index.html"
+  },
+  "action": {
+    "default_title": "Open Fill My Resume",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
