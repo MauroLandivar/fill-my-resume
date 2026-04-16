@@ -719,7 +719,7 @@ async function parseCvWithClaude(text, apiKey) {
     },
     body: JSON.stringify({
       model: 'claude-sonnet-4-6',
-      max_tokens: 2048,
+      max_tokens: 4096,
       messages: [{
         role: 'user',
         content: `${CV_PARSE_PROMPT}\n\nCV TEXT:\n${text.slice(0, 12000)}`
@@ -731,7 +731,21 @@ async function parseCvWithClaude(text, apiKey) {
   const raw = data.content[0].text.trim();
   const jsonStart = raw.indexOf('{');
   const jsonEnd = raw.lastIndexOf('}');
-  return JSON.parse(raw.slice(jsonStart, jsonEnd + 1));
+  if (jsonStart === -1 || jsonEnd === -1) throw new Error('No se encontró JSON en la respuesta');
+  const jsonStr = raw.slice(jsonStart, jsonEnd + 1);
+  try {
+    return JSON.parse(jsonStr);
+  } catch {
+    // Response may be truncated — try extracting only the safe top-level fields
+    const safe = {};
+    const topFields = ['firstName','lastName','email','countryCode','phoneNumber','dateOfBirth','location','linkedin','github','portfolio','occupationTitle','bio'];
+    for (const key of topFields) {
+      const m = jsonStr.match(new RegExp(`"${key}"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*)"`));
+      if (m) safe[key] = m[1];
+    }
+    safe.workExperience = []; safe.education = []; safe.certifications = []; safe.skills = []; safe.languages = [];
+    return safe;
+  }
 }
 
 // ── Review modal ──────────────────────────────────────
@@ -861,16 +875,6 @@ document.getElementById('review-cancel').addEventListener('click', () => reviewM
 document.getElementById('review-save').addEventListener('click', async () => {
   const get = (name) => document.querySelector(`[data-review-field="${name}"]`)?.value?.trim() || '';
 
-  // ── Simple field map ──────────────────────────────
-  const simpleFields = {
-    fullName:        '.field-card[data-copy] .field-value[data-en]',
-    email:           null,
-    phone:           null,
-    location:        null,
-    occupationTitle: null,
-    bio:             null,
-  };
-
   // Update by finding field labels
   document.querySelectorAll('.field-card').forEach(card => {
     const label = card.querySelector('.field-label')?.textContent?.trim().toLowerCase();
@@ -902,7 +906,6 @@ document.getElementById('review-save').addEventListener('click', async () => {
 
   // ── Work experience ───────────────────────────────
   const weCount = document.querySelectorAll('[data-review-field^="we_"][data-review-field$="_company"]').length;
-  const weContainer = document.querySelector('.accordion-content');
   const existingEntries = document.querySelectorAll('.entry-card');
 
   for (let i = 0; i < weCount; i++) {
