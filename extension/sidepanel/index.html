@@ -87,19 +87,34 @@
       </button>
       <div class="accordion-content">
 
-        <div class="field-card" data-copy="Alex Rivera">
-          <span class="field-label" data-en="Full Name" data-es="Nombre completo" data-pt="Nome completo">Full Name</span>
-          <span class="field-value" data-en="Alex Rivera" data-es="Alex Rivera" data-pt="Alex Rivera">Alex Rivera</span>
+        <div class="field-card" data-copy="Alex">
+          <span class="field-label" data-en="First Name" data-es="Nombre" data-pt="Nome">First Name</span>
+          <span class="field-value">Alex</span>
+        </div>
+
+        <div class="field-card" data-copy="Rivera">
+          <span class="field-label" data-en="Last Name" data-es="Apellido" data-pt="Sobrenome">Last Name</span>
+          <span class="field-value">Rivera</span>
         </div>
 
         <div class="field-card" data-copy="alex.rivera@email.com">
           <span class="field-label" data-en="Email" data-es="Correo electrónico" data-pt="E-mail">Email</span>
-          <span class="field-value" data-en="alex.rivera@email.com" data-es="alex.rivera@email.com" data-pt="alex.rivera@email.com">alex.rivera@email.com</span>
+          <span class="field-value">alex.rivera@email.com</span>
         </div>
 
-        <div class="field-card" data-copy="+591 70 000 000">
-          <span class="field-label" data-en="Phone" data-es="Teléfono" data-pt="Telefone">Phone</span>
-          <span class="field-value" data-en="+591 70 000 000" data-es="+591 70 000 000" data-pt="+591 70 000 000">+591 70 000 000</span>
+        <div class="field-card" data-copy="+591">
+          <span class="field-label" data-en="Country Code" data-es="Código de país" data-pt="Código do país">Country Code</span>
+          <span class="field-value">+591</span>
+        </div>
+
+        <div class="field-card" data-copy="70 000 000">
+          <span class="field-label" data-en="Phone Number" data-es="Número de teléfono" data-pt="Número de telefone">Phone Number</span>
+          <span class="field-value">70 000 000</span>
+        </div>
+
+        <div class="field-card" data-copy="01/01/1990">
+          <span class="field-label" data-en="Date of Birth" data-es="Fecha de nacimiento" data-pt="Data de nascimento">Date of Birth</span>
+          <span class="field-value">01/01/1990</span>
         </div>
 
         <div class="field-card" data-copy="Bolivia — Open to remote">
@@ -110,11 +125,11 @@
             data-pt="Bolívia — Disponível para trabalho remoto">Bolivia — Open to remote</span>
         </div>
 
-        <div class="field-card" data-copy="linkedin.com/in/alexrivera">
+        <div class="field-card" data-copy="https://www.linkedin.com/in/alexrivera">
           <span class="field-label">LinkedIn</span>
           <div class="field-row">
-            <span class="field-value">linkedin.com/in/alexrivera</span>
-            <a class="link-btn" href="https://linkedin.com/in/alexrivera" target="_blank" title="Open" onclick="event.stopPropagation()">
+            <span class="field-value">https://www.linkedin.com/in/alexrivera</span>
+            <a class="link-btn" id="linkedin-link" href="https://www.linkedin.com/in/alexrivera" target="_blank" title="Open" onclick="event.stopPropagation()">
               <i data-lucide="external-link" width="14" height="14"></i>
             </a>
           </div>
@@ -203,6 +218,16 @@
             <i data-lucide="chevron-down" width="14" height="14" class="entry-chevron"></i>
           </button>
           <div class="entry-body">
+
+            <div class="field-card" data-copy="Viva">
+              <span class="field-label" data-en="Company" data-es="Empresa" data-pt="Empresa">Company</span>
+              <span class="field-value">Viva</span>
+            </div>
+
+            <div class="field-card" data-copy="Product Owner">
+              <span class="field-label" data-en="Role" data-es="Cargo" data-pt="Cargo">Role</span>
+              <span class="field-value">Product Owner</span>
+            </div>
 
             <!-- Date block -->
             <div class="date-block">
@@ -324,6 +349,16 @@
             <i data-lucide="chevron-down" width="14" height="14" class="entry-chevron"></i>
           </button>
           <div class="entry-body">
+
+            <div class="field-card" data-copy="TechCorp">
+              <span class="field-label" data-en="Company" data-es="Empresa" data-pt="Empresa">Company</span>
+              <span class="field-value">TechCorp</span>
+            </div>
+
+            <div class="field-card" data-copy="Brand Manager">
+              <span class="field-label" data-en="Role" data-es="Cargo" data-pt="Cargo">Role</span>
+              <span class="field-value">Brand Manager</span>
+            </div>
 
             <!-- Date block — current job -->
             <div class="date-block">
@@ -547,6 +582,15 @@
                 </button>
               </div>
             </div>
+            <div class="entry-field">
+              <span class="entry-field-label" data-en="Institution" data-es="Institución" data-pt="Instituição">Institution</span>
+              <div class="entry-field-row">
+                <span class="entry-field-value">Udemy</span>
+                <button class="copy-btn" data-value="Udemy" title="Copy">
+                  <i data-lucide="copy" width="13" height="13"></i>
+                </button>
+              </div>
+            </div>
             <div class="date-block">
               <div class="date-block-header">
                 <i data-lucide="calendar" width="11" height="11"></i>
@@ -626,6 +670,15 @@
               <div class="entry-field-row">
                 <span class="entry-field-value">Product Management — Reforge</span>
                 <button class="copy-btn" data-value="Product Management — Reforge" title="Copy">
+                  <i data-lucide="copy" width="13" height="13"></i>
+                </button>
+              </div>
+            </div>
+            <div class="entry-field">
+              <span class="entry-field-label" data-en="Institution" data-es="Institución" data-pt="Instituição">Institution</span>
+              <div class="entry-field-row">
+                <span class="entry-field-value">Reforge</span>
+                <button class="copy-btn" data-value="Reforge" title="Copy">
                   <i data-lucide="copy" width="13" height="13"></i>
                 </button>
               </div>

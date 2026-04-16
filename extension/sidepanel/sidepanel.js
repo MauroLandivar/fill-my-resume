@@ -667,9 +667,12 @@ const CV_PARSE_PROMPT = `You are a CV parser. Extract all information from the C
 
 JSON structure:
 {
-  "fullName": "",
+  "firstName": "",
+  "lastName": "",
   "email": "",
-  "phone": "",
+  "countryCode": "",
+  "phoneNumber": "",
+  "dateOfBirth": "",
   "location": "",
   "linkedin": "",
   "github": "",
@@ -754,9 +757,12 @@ function buildReviewModal(cv) {
 
   // Personal
   section('Perfil Personal', [
-    field('Nombre completo', 'fullName', cv.fullName),
+    field('Nombre', 'firstName', cv.firstName),
+    field('Apellido', 'lastName', cv.lastName),
     field('Email', 'email', cv.email),
-    field('Teléfono', 'phone', cv.phone),
+    field('Código de país', 'countryCode', cv.countryCode),
+    field('Número de teléfono', 'phoneNumber', cv.phoneNumber),
+    field('Fecha de nacimiento', 'dateOfBirth', cv.dateOfBirth),
     field('Ubicación', 'location', cv.location),
     field('LinkedIn', 'linkedin', cv.linkedin),
     field('GitHub', 'github', cv.github),
@@ -871,9 +877,12 @@ document.getElementById('review-save').addEventListener('click', async () => {
     const valueEl = card.querySelector('.field-value');
     if (!valueEl) return;
     const map = {
-      'full name': 'fullName', 'nombre completo': 'fullName', 'nome completo': 'fullName',
+      'first name': 'firstName', 'nombre': 'firstName', 'nome': 'firstName',
+      'last name': 'lastName', 'apellido': 'lastName', 'sobrenome': 'lastName',
       'email': 'email', 'correo electrónico': 'email', 'e-mail': 'email',
-      'phone': 'phone', 'teléfono': 'phone', 'telefone': 'phone',
+      'country code': 'countryCode', 'código de país': 'countryCode', 'código do país': 'countryCode',
+      'phone number': 'phoneNumber', 'número de teléfono': 'phoneNumber', 'número de telefone': 'phoneNumber',
+      'date of birth': 'dateOfBirth', 'fecha de nacimiento': 'dateOfBirth', 'data de nascimento': 'dateOfBirth',
       'location': 'location', 'ubicación': 'location', 'localização': 'location',
       'linkedin': 'linkedin',
       'github': 'github',
@@ -917,10 +926,21 @@ document.getElementById('review-save').addEventListener('click', async () => {
           }
         });
       };
+      const setFieldCard = (labelText, val) => {
+        entry.querySelectorAll('.field-card').forEach(card => {
+          const lbl = card.querySelector('.field-label');
+          if (lbl && lbl.textContent.trim().toLowerCase() === labelText.toLowerCase()) {
+            const v = card.querySelector('.field-value');
+            if (v && val) { v.textContent = val; card.dataset.copy = val; }
+          }
+        });
+      };
       const titleEl = entry.querySelector('.entry-title');
       const subtitleEl = entry.querySelector('.entry-subtitle');
       if (titleEl && company) titleEl.textContent = `${company} — ${role}`;
       if (subtitleEl && start) subtitleEl.textContent = `${start} – ${end}${location ? ' · ' + location : ''}`;
+      if (company) setFieldCard('Company', company);
+      if (role)    setFieldCard('Role', role);
       setField('about', about);
       setField('responsib', resp);
       setField('achiev', ach);
